@@ -1,0 +1,6 @@
+{
+  "name": "Granny's Kitchen - Fourways Mall",
+  "description": "Now open! Warm, homely South African home-cooked food restaurant at Fourways Mall, BTC05 Taxi Terminal. Hearty stews, lamb curry, supreme kotas, and fresh amagwinya.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
