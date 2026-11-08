@@ -145,7 +145,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
   };
 
   return (
-    <section id="menu-section" className="w-full max-w-4xl mx-auto px-4 py-8 relative">
+    <section id="menu-section" className="w-full max-w-5xl mx-auto px-2 sm:px-4 py-6 relative">
       {/* Toast Feedback */}
       {toastMessage && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-[#501012] text-[#fbf6ec] border-2 border-[#e5a84b] px-5 py-2.5 rounded-full shadow-2xl text-xs sm:text-sm font-semibold flex items-center gap-2 animate-bounce">

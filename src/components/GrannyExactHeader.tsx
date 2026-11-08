@@ -12,7 +12,7 @@ export const GrannyExactHeader: React.FC<GrannyExactHeaderProps> = ({ onOrderCli
   return (
     <header className="w-full flex flex-col items-center relative select-none">
       {/* Top Graphic Lockup featuring the EXACT Checked Cloth Banner & EXACT Logo Text */}
-      <div className="w-full max-w-4xl mx-auto overflow-hidden rounded-b-2xl shadow-xl relative bg-[#1c1d20]">
+      <div className="w-full mx-auto overflow-hidden rounded-b-2xl shadow-xl relative bg-[#1c1d20]">
         <div className="relative w-full aspect-[1344/480] sm:aspect-[1344/430] overflow-hidden">
           <img
             src="/assets/aistudio/WhatsApp_Image_2026-11-07_at_3.31.53_PM_215f9de8.jpg"
@@ -26,7 +26,7 @@ export const GrannyExactHeader: React.FC<GrannyExactHeaderProps> = ({ onOrderCli
       </div>
 
       {/* Immediate Open / Closed Announcement Bar - Styled with Tartan Ribbon Accents */}
-      <div className="w-full max-w-3xl mx-auto -mt-6 sm:-mt-8 z-10 px-4">
+      <div className="w-full max-w-4xl mx-auto -mt-6 sm:-mt-8 z-10 px-4">
         <div className="relative rounded-2xl p-1 bg-scottish-tartan shadow-2xl border-2 border-[#8b1d20]/50">
           <div className="bg-[#241712] text-[#fffcf7] rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border border-[#e5a84b]/40">
             <div className="flex items-center gap-2.5 text-center sm:text-left">

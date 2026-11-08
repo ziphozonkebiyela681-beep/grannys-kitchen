@@ -116,21 +116,9 @@ export default function App() {
           When the website first loads, the grey brick walls are joined covering the screen,
           then slide smoothly open to the sides revealing the exact checked banner, logo and menu! */}
       <BrickWallCurtain>
-        <div className="relative w-full min-h-screen flex justify-center bg-[#1c1d20]">
-          {/* Left Brick Wall Flank on Desktop (Loyal to the exact brick setup in the image) */}
-          <div
-            className="hidden xl:block w-[18vw] min-h-screen shrink-0 border-r-2 border-black/30 pointer-events-none sticky top-0 h-screen"
-            style={{
-              backgroundImage: "url('/assets/aistudio/WhatsApp_Image_2026-11-07_at_3.31.53_PM_215f9de8.jpg')",
-              backgroundPosition: 'left center',
-              backgroundSize: 'cover',
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent" />
-          </div>
-
-          {/* 2. CENTRE: Warm Cream / Off-White Panel for the Content and Menu */}
-          <main className="w-full max-w-4xl min-h-screen bg-cream-panel relative shadow-2xl border-x-4 border-[#3e1b1c]/30 pb-16">
+        <div className="relative w-full min-h-screen flex justify-center bg-[#151210]">
+          {/* Main Content Area - Generous Full Space Screen Display without narrow side walls */}
+          <main className="w-full max-w-5xl lg:max-w-6xl min-h-screen bg-cream-panel relative shadow-2xl border-x-2 border-[#3e1b1c]/20 pb-16 mx-auto">
             {/* Subtle warm lighting vignette over the cream panel */}
             <div className="absolute inset-0 bg-radial from-transparent via-[#f3e9d8]/30 to-[#e4d4bd]/50 pointer-events-none" />
 
@@ -369,18 +357,6 @@ export default function App() {
               </footer>
             </div>
           </main>
-
-          {/* Right Brick Wall Flank on Desktop (Loyal to the exact brick setup in the image) */}
-          <div
-            className="hidden xl:block w-[18vw] min-h-screen shrink-0 border-l-2 border-black/30 pointer-events-none sticky top-0 h-screen"
-            style={{
-              backgroundImage: "url('/assets/aistudio/WhatsApp_Image_2026-11-07_at_3.31.53_PM_215f9de8.jpg')",
-              backgroundPosition: 'right center',
-              backgroundSize: 'cover',
-            }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-l from-black/60 to-transparent" />
-          </div>
         </div>
       </BrickWallCurtain>
 

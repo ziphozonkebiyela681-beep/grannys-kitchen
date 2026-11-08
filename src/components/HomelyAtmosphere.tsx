@@ -24,7 +24,7 @@ export const HomelyAtmosphere: React.FC<HomelyAtmosphereProps> = ({
   onOpenOrder,
 }) => {
   return (
-    <section id="our-story" className="w-full max-w-4xl mx-auto px-4 py-6 scroll-mt-6 select-none">
+    <section id="our-story" className="w-full max-w-5xl mx-auto px-4 py-6 scroll-mt-6 select-none">
       {/* Top Breadcrumb Navigation Bar for the Story Page */}
       {(onGoToSummary || onGoToFullMenu) && (
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">

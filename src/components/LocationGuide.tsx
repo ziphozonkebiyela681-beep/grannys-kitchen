@@ -3,7 +3,7 @@ import { MapPin, Navigation, Clock, CreditCard, ShieldCheck, Bus } from 'lucide-
 
 export const LocationGuide: React.FC = () => {
   return (
-    <section className="w-full max-w-4xl mx-auto px-4 py-8">
+    <section className="w-full max-w-5xl mx-auto px-4 py-8">
       <div className="bg-[#fcf8f0] border-2 border-[#d5c3aa] rounded-2xl p-5 sm:p-8 shadow-md relative overflow-hidden">
         {/* Subtle decorative check ribbon line */}
         <div className="absolute top-0 inset-x-0 h-1.5 bg-scottish-tartan" />
