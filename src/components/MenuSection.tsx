@@ -8,7 +8,8 @@ import {
   AMAGWINYA_TOPPINGS,
   MenuItem,
 } from '../data/menuData';
-import { Plus, Check, ShoppingBag, Utensils, Flame, Sparkles } from 'lucide-react';
+import { Plus, Check, ShoppingBag, Utensils, Flame, Sparkles, Clock, ArrowLeft } from 'lucide-react';
+import { useRestaurantStatus } from '../utils/operatingHours';
 
 export interface CartItem {
   cartId: string;
@@ -24,22 +25,46 @@ interface MenuSectionProps {
   onAddToCart: (cartItem: CartItem) => void;
   cartCount: number;
   onOpenCart: () => void;
+  initialCategory?: string;
+  onBackToSummary?: () => void;
+  initialConfiguringItem?: MenuItem | null;
 }
 
 export const MenuSection: React.FC<MenuSectionProps> = ({
   onAddToCart,
   cartCount,
   onOpenCart,
+  initialCategory,
+  onBackToSummary,
+  initialConfiguringItem,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<string>('all');
-  
+  const [activeCategory, setActiveCategory] = useState<string>(initialCategory || 'all');
+  const status = useRestaurantStatus();
+
   // Customizer modal / expand state
-  const [configuringItem, setConfiguringItem] = useState<MenuItem | null>(null);
+  const [configuringItem, setConfiguringItem] = useState<MenuItem | null>(initialConfiguringItem || null);
   const [chosenStarch, setChosenStarch] = useState<string>(STARCH_CHOICES[0]);
   const [chosenVeg, setChosenVeg] = useState<string[]>([VEG_CHOICES[0], VEG_CHOICES[1]]);
   const [chosenExtras, setChosenExtras] = useState<{ name: string; price: number }[]>([]);
   const [quantity, setQuantity] = useState<number>(1);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Sync initialCategory when it changes from summary page selection
+  React.useEffect(() => {
+    if (initialCategory) {
+      setActiveCategory(initialCategory);
+    }
+  }, [initialCategory]);
+
+  React.useEffect(() => {
+    if (initialConfiguringItem) {
+      setConfiguringItem(initialConfiguringItem);
+      setChosenStarch(STARCH_CHOICES[0]);
+      setChosenVeg([VEG_CHOICES[0], VEG_CHOICES[1]]);
+      setChosenExtras([]);
+      setQuantity(1);
+    }
+  }, [initialConfiguringItem]);
 
   const filteredItems = activeCategory === 'all'
     ? MENU_ITEMS
@@ -129,17 +154,49 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
         </div>
       )}
 
+      {/* Page Navigation Breadcrumb: Back to Page 1 (Summary) */}
+      {onBackToSummary && (
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <button
+            onClick={onBackToSummary}
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
+          >
+            <ArrowLeft className="w-4 h-4 text-[#8b1d20]" />
+            <span>← Back to Menu Summary (Page 1)</span>
+          </button>
+          <div className="text-right hidden sm:block">
+            <span className="text-xs font-bold text-[#8b1d20] uppercase tracking-wider font-condensed">
+              Page 2 • Complete Menu
+            </span>
+            <p className="text-[11px] text-[#735041]">All 15+ dishes, starches & toppings</p>
+          </div>
+        </div>
+      )}
+
       {/* Menu Header Board (Celebrating the Scottish Tartan Pattern & Logo Motif) */}
       <div className="relative rounded-t-2xl overflow-hidden border-2 border-b-0 border-[#d5c3aa] shadow-md bg-scottish-tartan p-1.5 sm:p-2">
         <div className="bg-[#2a1711] text-[#fcf7ee] rounded-xl p-4 sm:p-5 text-center border border-[#e5a84b]/40 shadow-inner relative">
           <h2 className="font-display text-2xl sm:text-4xl tracking-wider uppercase text-[#fffcf7] mb-1 drop-shadow-md">
             GRANNY'S KITCHEN
           </h2>
-          <div className="inline-flex items-center gap-2 bg-black/40 px-3.5 py-1 rounded-full border border-white/10 mt-1">
-            <span className="w-2 h-2 rounded-full bg-[#e5a84b]" />
-            <p className="font-condensed text-xs sm:text-sm tracking-widest text-[#f5eedf] uppercase font-bold">
-              FOURWAYS MALL BTC05 • HOME COOKED WITH LOVE
-            </p>
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-1.5">
+            <div className="inline-flex items-center gap-2 bg-black/45 px-3.5 py-1 rounded-full border border-white/10">
+              <span
+                className={`w-2 h-2 rounded-full ${
+                  status.isOpen ? 'bg-emerald-400 animate-ping' : 'bg-amber-400'
+                }`}
+              />
+              <p
+                className={`font-condensed text-xs sm:text-sm tracking-widest uppercase font-bold ${
+                  status.isOpen ? 'text-[#f5eedf]' : 'text-[#fca5a5]'
+                }`}
+              >
+                {status.isOpen ? 'KITCHEN OPEN NOW (06:00 – 19:00)' : 'KITCHEN CLOSED (OPENS 06:00 AM)'}
+              </p>
+            </div>
+            <span className="text-[11px] text-[#e8c89b] font-body bg-black/30 px-2.5 py-1 rounded-full hidden sm:inline border border-white/5">
+              Fourways Mall BTC05 • {status.currentTimeStr}
+            </span>
           </div>
         </div>
       </div>

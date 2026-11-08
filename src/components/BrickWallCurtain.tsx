@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Utensils, RefreshCw, Sparkles, MapPin } from 'lucide-react';
+import { Utensils, RefreshCw, Sparkles, MapPin, Clock } from 'lucide-react';
+import { useRestaurantStatus } from '../utils/operatingHours';
 
 interface BrickWallCurtainProps {
   onRevealChange?: (revealed: boolean) => void;
@@ -13,15 +14,16 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
 }) => {
   const [isRevealed, setIsRevealed] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const status = useRestaurantStatus();
 
-  // Auto-reveal after a brief initial moment on first load
+  // Allow comfortable viewing of the entrance overlay card before auto-revealing if untouched
   useEffect(() => {
     if (hasInteracted) return;
 
     const timer = setTimeout(() => {
       setIsRevealed(true);
       onRevealChange?.(true);
-    }, 1200);
+    }, 4500);
 
     return () => clearTimeout(timer);
   }, [hasInteracted, onRevealChange]);
@@ -128,37 +130,55 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
             transition={{ duration: 0.5 }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center p-6 pointer-events-auto bg-black/45 backdrop-blur-[2px]"
           >
-            <div className="max-w-md w-full relative p-1.5 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50">
-              <div className="bg-[#fffdf9] rounded-xl p-6 sm:p-7 text-center border border-[#e5a84b]/40">
-                <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-[#2d1b16] text-[#e5a84b] flex items-center justify-center shadow-md border border-[#e5a84b]/40">
-                  <Utensils className="w-7 h-7" />
+            <div className="max-w-lg w-full relative p-1.5 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50">
+              <div className="bg-[#fffdf9] rounded-xl p-5 sm:p-7 text-center border border-[#e5a84b]/40">
+                {/* The EXACT Granny's Kitchen Logo Graphic */}
+                <div className="w-full flex items-center justify-center mb-4 px-2">
+                  <img
+                    src="/assets/logos/grannys_kitchen_logo.png"
+                    alt="Granny's Kitchen"
+                    className="w-full max-w-[280px] sm:max-w-[340px] h-auto object-contain drop-shadow-[0_4px_12px_rgba(40,15,10,0.2)] select-none pointer-events-none"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
 
-                {/* Status Badge: Now Open */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-800 text-white rounded-full text-xs font-bold uppercase tracking-wider mb-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-                  <span>Now Open & Serving</span>
+                {/* Status Badge: Open or Closed based on operating hours (06:00 - 19:00 SAST) */}
+                <div className="mb-3">
+                  {status.isOpen ? (
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-emerald-800 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm border border-emerald-600/50">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                      <span>{status.statusText}</span>
+                    </div>
+                  ) : (
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#421618] text-[#ffe8e8] rounded-full text-xs font-bold uppercase tracking-wider shadow-sm border border-[#e5a84b]/40">
+                      <Clock className="w-3.5 h-3.5 text-[#fbbf24]" />
+                      <span>{status.statusText} • {status.opensAtText}</span>
+                    </div>
+                  )}
                 </div>
 
-                <h2 className="font-display text-2xl sm:text-3xl text-[#361a15] tracking-wide mb-1 uppercase drop-shadow-xs">
-                  Granny's Kitchen
-                </h2>
-
-                <p className="flex items-center justify-center gap-1 text-xs font-bold text-[#633a28] uppercase tracking-wider mb-3">
+                <p className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#633a28] uppercase tracking-wider mb-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#e5a84b]" />
                   <span>Fourways Mall • BTC05 Taxi Terminal</span>
                 </p>
 
-                <p className="text-xs sm:text-sm text-[#5c4a3b] mb-5 font-body">
-                  Step right in for hearty slow-cooked beef stew, lamb curry, crispy chips with Aromat, loaded kotas, fresh amagwinya, and crisp salads.
+                {/* Operating Hours Note */}
+                <p className="text-[11px] sm:text-xs text-[#785341] font-semibold mb-3">
+                  Hours: {status.hoursText} <span className="opacity-70">({status.currentTimeStr})</span>
+                </p>
+
+                <p className="text-xs sm:text-sm text-[#5c4a3b] mb-5 font-body leading-relaxed px-1">
+                  {status.isOpen
+                    ? "Step right in for hearty slow-cooked beef stew, lamb curry, crispy chips with Aromat, loaded kotas, fresh amagwinya, and crisp salads."
+                    : "The kitchen is currently closed for the night. You can browse our full menu, prices, and food items ahead of our 06:00 AM opening!"}
                 </p>
 
                 <button
                   onClick={handleOpenDoors}
-                  className="w-full py-3.5 px-6 rounded-xl bg-[#2d1b16] hover:bg-[#422820] border border-[#e5a84b]/50 text-[#fffdfa] font-condensed tracking-widest text-lg uppercase shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 group cursor-pointer font-bold"
+                  className="w-full py-3.5 px-6 rounded-xl bg-[#2d1b16] hover:bg-[#422820] border border-[#e5a84b]/50 text-[#fffdfa] font-condensed tracking-widest text-base sm:text-lg uppercase shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2 group cursor-pointer font-bold"
                 >
                   <Sparkles className="w-5 h-5 text-[#e5a84b] group-hover:rotate-12 transition-transform" />
-                  <span>Step Inside • View Menu</span>
+                  <span>{status.isOpen ? "Step Inside • View Menu & Order" : "Step Inside • Browse Menu"}</span>
                 </button>
               </div>
             </div>

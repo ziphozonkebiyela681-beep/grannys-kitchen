@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { CartItem } from './MenuSection';
-import { X, Trash2, ShoppingBag, Send, MapPin, Copy, Check } from 'lucide-react';
+import { X, Trash2, ShoppingBag, Send, MapPin, Copy, Check, Clock } from 'lucide-react';
+import { useRestaurantStatus } from '../utils/operatingHours';
 
 interface TakeawayBagModalProps {
   isOpen: boolean;
@@ -22,6 +23,7 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
   const [customerName, setCustomerName] = useState('');
   const [pickupNote, setPickupNote] = useState('');
   const [copied, setCopied] = useState(false);
+  const status = useRestaurantStatus();
 
   if (!isOpen) return null;
 
@@ -93,6 +95,21 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
             <X className="w-4 h-4" />
           </button>
         </div>
+
+        {/* Operating status notification banner */}
+        {!status.isOpen && (
+          <div className="bg-[#3e1416] text-[#ffebe8] px-4 py-2.5 text-xs flex items-center justify-between border-b border-[#e5a84b]/40">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-[#fbbf24] shrink-0" />
+              <span>
+                <strong>Kitchen is currently closed.</strong> Hours: 06:00 – 19:00 Daily.
+              </span>
+            </div>
+            <span className="text-[10px] bg-black/40 px-2 py-0.5 rounded text-[#e5a84b] font-bold uppercase tracking-wider">
+              {status.opensAtText}
+            </span>
+          </div>
+        )}
 
         {/* Scrollable Items List */}
         <div className="p-4 sm:p-6 overflow-y-auto grow space-y-4">

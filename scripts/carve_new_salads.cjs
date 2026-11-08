@@ -1,103 +1,123 @@
 const sharp = require('sharp');
 const fs = require('fs');
-const path = require('path');
 
-// Ensure directories
-fs.mkdirSync('public/assets/patterns', { recursive: true });
-fs.mkdirSync('dist/assets/patterns', { recursive: true });
-
-// 1. Process and save cloth pattern
 async function processCloth() {
+  fs.mkdirSync('public/assets/patterns', { recursive: true });
+  fs.mkdirSync('dist/assets/patterns', { recursive: true });
+  fs.mkdirSync('public/assets/plates', { recursive: true });
+  fs.mkdirSync('dist/assets/plates', { recursive: true });
+
   const clothSource = 'public/assets/aistudio/WhatsApp_Image_2026-11-07_at_6.05.31_PM_7c44e7c1.jpg';
   await sharp(clothSource)
-    .jpeg({ quality: 90 })
+    .jpeg({ quality: 92 })
     .toFile('public/assets/patterns/clothy_checkered_pattern.jpg');
 
   fs.copyFileSync(
     'public/assets/patterns/clothy_checkered_pattern.jpg',
     'dist/assets/patterns/clothy_checkered_pattern.jpg'
   );
-  console.log('Saved clothy_checkered_pattern.jpg successfully');
+  console.log('Saved cloth pattern to public and dist');
 }
 
-// 2. Carve a bowl on white/light background cleanly
-async function carveBowl(inputPath, outputPath, distPath) {
-  const image = sharp(inputPath);
-  const { data, info } = await image.raw().toBuffer({ resolveWithObject: true });
+async function carveSalad(inputFile, outputFile, distFile, maxBottomY) {
+  const { data, info } = await sharp(inputFile).raw().toBuffer({ resolveWithObject: true });
   const { width, height } = info;
 
-  // Let's create an alpha mask using flood-fill from edges
-  // Background is light/white (R > 220, G > 220, B > 220) and soft shadow (R > 180, G > 180, B > 180 with low saturation |R-G| < 20, |G-B| < 20)
-  // The bowl has rich teal/turquoise ceramic colors (high saturation, blue/green > red) and warm terracotta rim (red > green + 30).
-  const isBgCandidate = (x, y) => {
+  const isBackground = (x, y) => {
+    // Anything strictly below the bowl base is shadow/floor
+    if (y > maxBottomY) return true;
+
     const idx = (y * width + x) * 3;
     const r = data[idx];
     const g = data[idx + 1];
     const b = data[idx + 2];
 
-    // Very bright near-white
-    if (r > 225 && g > 225 && b > 225) return true;
+    // Studio white background: very bright
+    if (r > 215 && g > 215 && b > 215) return true;
 
-    // Neutral gray shadow outside the bowl
-    // Soft shadow on white: R, G, B are similar and > 175
+    // Neutral gray shadow: any shadow outside the bowl
+    // Cast shadow is achromatic (max difference between RGB is low)
     const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
-    if (r > 170 && g > 170 && b > 170 && maxDiff <= 25) {
-      // Check if this pixel is outside the main bowl region
-      // Bowl is centered roughly (x: 100..924, y: 150..880)
-      return true;
+    if (r > 120 && g > 120 && b > 120 && maxDiff <= 25) {
+      // If below mid-height or near bottom/right where cast shadow falls
+      if (y > height * 0.55) {
+        return true;
+      }
+      if (r > 180 && maxDiff <= 20) {
+        return true;
+      }
     }
+
     return false;
   };
 
-  // BFS flood-fill from borders
+  // Connected flood-fill from all 4 borders
   const visited = new Uint8Array(width * height);
-  const queue = new Int32Array(width * height * 2);
-  let qHead = 0;
-  let qTail = 0;
+  const queueX = new Int32Array(width * height);
+  const queueY = new Int32Array(width * height);
+  let head = 0, tail = 0;
 
-  function pushQ(x, y) {
-    const idx = y * width + x;
-    if (!visited[idx]) {
-      visited[idx] = 1;
-      queue[qTail++] = x;
-      queue[qTail++] = y;
+  for (let x = 0; x < width; x++) {
+    if (isBackground(x, 0)) {
+      visited[x] = 1;
+      queueX[tail] = x;
+      queueY[tail] = 0;
+      tail++;
+    }
+    const bIdx = (height - 1) * width + x;
+    if (isBackground(x, height - 1)) {
+      visited[bIdx] = 1;
+      queueX[tail] = x;
+      queueY[tail] = height - 1;
+      tail++;
     }
   }
 
-  // Seed with all borders
-  for (let x = 0; x < width; x++) {
-    if (isBgCandidate(x, 0)) pushQ(x, 0);
-    if (isBgCandidate(x, height - 1)) pushQ(x, height - 1);
-  }
   for (let y = 0; y < height; y++) {
-    if (isBgCandidate(0, y)) pushQ(0, y);
-    if (isBgCandidate(width - 1, y)) pushQ(width - 1, y);
+    const lIdx = y * width;
+    if (isBackground(0, y) && !visited[lIdx]) {
+      visited[lIdx] = 1;
+      queueX[tail] = 0;
+      queueY[tail] = y;
+      tail++;
+    }
+    const rIdx = y * width + (width - 1);
+    if (isBackground(width - 1, y) && !visited[rIdx]) {
+      visited[rIdx] = 1;
+      queueX[tail] = width - 1;
+      queueY[tail] = y;
+      tail++;
+    }
   }
 
-  while (qHead < qTail) {
-    const cx = queue[qHead++];
-    const cy = queue[qHead++];
+  while (head < tail) {
+    const cx = queueX[head];
+    const cy = queueY[head];
+    head++;
 
     const neighbors = [
-      [cx + 1, cy],
       [cx - 1, cy],
-      [cx, cy + 1],
-      [cx, cy - 1]
+      [cx + 1, cy],
+      [cx, cy - 1],
+      [cx, cy + 1]
     ];
 
-    for (const [nx, ny] of neighbors) {
+    for (let i = 0; i < 4; i++) {
+      const nx = neighbors[i][0];
+      const ny = neighbors[i][1];
       if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-        const nIdx = ny * width + nx;
-        if (!visited[nIdx] && isBgCandidate(nx, ny)) {
-          visited[nIdx] = 1;
-          queue[qTail++] = nx;
-          queue[qTail++] = ny;
+        const idx = ny * width + nx;
+        if (!visited[idx] && isBackground(nx, ny)) {
+          visited[idx] = 1;
+          queueX[tail] = nx;
+          queueY[tail] = ny;
+          tail++;
         }
       }
     }
   }
 
-  // Now create RGBA buffer
+  // Create RGBA image
   const rgba = Buffer.alloc(width * height * 4);
   let minX = width, maxX = 0, minY = height, maxY = 0;
 
@@ -110,14 +130,17 @@ async function carveBowl(inputPath, outputPath, distPath) {
       const r = data[srcIdx];
       const g = data[srcIdx + 1];
       const b = data[srcIdx + 2];
+      const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
 
-      if (visited[pIdx]) {
+      // Extra check: any unvisited pixel in the bottom half that is clearly neutral shadow
+      const isResidualShadow = y > height * 0.58 && r > 125 && g > 125 && b > 125 && maxDiff <= 22 && (g - r < 18) && (b - r < 18);
+
+      if (visited[pIdx] || isResidualShadow) {
         rgba[destIdx] = 0;
         rgba[destIdx + 1] = 0;
         rgba[destIdx + 2] = 0;
         rgba[destIdx + 3] = 0;
       } else {
-        // Foreground bowl pixel
         rgba[destIdx] = r;
         rgba[destIdx + 1] = g;
         rgba[destIdx + 2] = b;
@@ -131,35 +154,23 @@ async function carveBowl(inputPath, outputPath, distPath) {
     }
   }
 
-  console.log(`Carved ${path.basename(outputPath)}: bbox [${minX}, ${minY}, ${maxX}, ${maxY}], w: ${maxX - minX + 1}, h: ${maxY - minY + 1}`);
-
-  // Defringe 1-2 px at edge if it has a white halo (r>215 && g>215 && b>215)
+  // Defringe 1-2px border to eliminate light/gray halo
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
       const idx = (y * width + x) * 4;
       if (rgba[idx + 3] === 255) {
-        // Check if neighbor is transparent
-        let hasTransNeighbor = false;
-        for (let dy = -1; dy <= 1; dy++) {
-          for (let dx = -1; dx <= 1; dx++) {
-            const ny = y + dy;
-            const nx = x + dx;
-            if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-              if (rgba[(ny * width + nx) * 4 + 3] === 0) {
-                hasTransNeighbor = true;
-                break;
-              }
-            }
-          }
-          if (hasTransNeighbor) break;
-        }
+        let hasTrans = false;
+        if (x > 0 && rgba[idx - 4 + 3] === 0) hasTrans = true;
+        else if (x < width - 1 && rgba[idx + 4 + 3] === 0) hasTrans = true;
+        else if (y > 0 && rgba[((y - 1) * width + x) * 4 + 3] === 0) hasTrans = true;
+        else if (y < height - 1 && rgba[((y + 1) * width + x) * 4 + 3] === 0) hasTrans = true;
 
-        if (hasTransNeighbor) {
+        if (hasTrans) {
           const r = rgba[idx];
           const g = rgba[idx + 1];
           const b = rgba[idx + 2];
-          // If outer border pixel is near white/light gray halo, make transparent
-          if (r > 200 && g > 200 && b > 200) {
+          const maxDiff = Math.max(Math.abs(r - g), Math.abs(g - b), Math.abs(r - b));
+          if (r > 175 && g > 175 && b > 175 && maxDiff <= 25) {
             rgba[idx + 3] = 0;
           }
         }
@@ -167,37 +178,49 @@ async function carveBowl(inputPath, outputPath, distPath) {
     }
   }
 
-  // Crop to bounding box
+  // Recompute bounding box after defringe
+  minX = width; maxX = 0; minY = height; maxY = 0;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (rgba[(y * width + x) * 4 + 3] > 0) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+
   const cropW = maxX - minX + 1;
   const cropH = maxY - minY + 1;
 
+  console.log(`Carved clean ${outputFile}: [${minX}, ${minY}, ${maxX}, ${maxY}], w=${cropW}, h=${cropH}`);
+
   await sharp(rgba, {
-    raw: {
-      width,
-      height,
-      channels: 4
-    }
+    raw: { width, height, channels: 4 }
   })
     .extract({ left: minX, top: minY, width: cropW, height: cropH })
     .png()
-    .toFile(outputPath);
+    .toFile(outputFile);
 
-  fs.copyFileSync(outputPath, distPath);
-  console.log(`Saved ${outputPath} and copied to ${distPath}`);
+  fs.copyFileSync(outputFile, distFile);
 }
 
-async function main() {
+async function run() {
   await processCloth();
-  await carveBowl(
+  await carveSalad(
     'src/assets/images/coleslaw_bowl_1794068009917.jpg',
     'public/assets/plates/coleslaw_plate.png',
-    'dist/assets/plates/coleslaw_plate.png'
+    'dist/assets/plates/coleslaw_plate.png',
+    872
   );
-  await carveBowl(
+  await carveSalad(
     'src/assets/images/green_salad_bowl_1794068010082.jpg',
     'public/assets/plates/green_salad_plate.png',
-    'dist/assets/plates/green_salad_plate.png'
+    'dist/assets/plates/green_salad_plate.png',
+    862
   );
+  console.log('Finished clean carve!');
 }
 
-main().catch(console.error);
+run().catch(console.error);
