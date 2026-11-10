@@ -121,12 +121,12 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center p-4 sm:p-6 pointer-events-auto bg-black/55 backdrop-blur-[2px] select-none overflow-x-hidden"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center p-3 sm:p-6 pointer-events-auto bg-black/60 backdrop-blur-[2px] select-none overflow-y-auto overflow-x-hidden"
           >
             {/* Center Area with Red Bistro Chairs flanking the Step Inside bar */}
-            <div className="relative max-w-xl w-full flex items-center justify-center">
+            <div className="relative max-w-xl w-full flex items-center justify-center my-auto py-2">
               {/* Left Red Bistro Chair */}
-              <div className="hidden sm:block absolute -left-16 md:-left-24 lg:-left-28 bottom-1 md:bottom-2 w-24 md:w-32 lg:w-36 pointer-events-none select-none z-20">
+              <div className="hidden sm:block absolute -left-8 md:-left-16 lg:-left-24 bottom-2 md:bottom-3 w-20 md:w-28 lg:w-36 pointer-events-none select-none z-20">
                 <img
                   src="/assets/decorations/red_bistro_chair_left.png"
                   alt="Red Bistro Chair"
@@ -135,8 +135,8 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
               </div>
 
               {/* Central Welcome Card */}
-              <div className="max-w-lg w-full relative z-10 p-1.5 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50">
-                <div className="bg-[#fffdf9] rounded-xl p-5 sm:p-7 text-center border border-[#e5a84b]/40">
+              <div className="max-w-lg w-full relative z-10 p-1.5 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50 max-h-[90vh] flex flex-col">
+                <div className="bg-[#fffdf9] rounded-xl p-4 sm:p-7 text-center border border-[#e5a84b]/40 overflow-y-auto">
                   {/* The EXACT Granny's Kitchen Logo Graphic */}
                   <div className="w-full flex items-center justify-center mb-4 px-2">
                     <img

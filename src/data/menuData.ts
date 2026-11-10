@@ -80,21 +80,21 @@ export const MENU_ITEMS: MenuItem[] = [
     id: 'chicken-dust-chips',
     name: 'Chicken Qtr Leg + Chips',
     category: 'chicken_dust',
-    price: 65,
+    price: 45,
     image: '/assets/menu_full/chicken_dust_chips.jpg',
     description: 'Crispy charcoal braai seasoned chicken quarter leg served with golden chips dusted in Aromat.',
     popular: true,
-    badge: 'Flame Seasoned',
+    badge: 'Flame Seasoned • R45',
   },
   {
     id: 'chicken-dust-pap',
     name: 'Chicken Qtr Leg + Pap + Gravy',
     category: 'chicken_dust',
-    price: 65,
+    price: 45,
     image: '/assets/menu_full/chicken_dust_pap.jpg',
     description: 'Flame-seasoned chicken quarter leg served with fluffy traditional pap and rich tomato-onion gravy.',
     popular: true,
-    badge: 'Traditional Favourite',
+    badge: 'Traditional Favourite • R45',
   },
 
   // Chips (Full authentic images with background)
@@ -111,7 +111,7 @@ export const MENU_ITEMS: MenuItem[] = [
     name: 'Medium Crispy Chips (with Aromat)',
     category: 'chips',
     price: 25,
-    image: '/assets/menu_full/chips_medium.jpg',
+    image: '/assets/menu_full/fish_and_chips.jpg',
     description: 'Generous portion of hot crispy chips tossed in Granny’s signature Aromat seasoning.',
     popular: true,
   },
@@ -130,22 +130,22 @@ export const MENU_ITEMS: MenuItem[] = [
     name: 'Fish + Chips or Salad (with Aromat)',
     category: 'chips',
     price: 70,
-    image: '/assets/menu_full/fish_and_chips.jpg',
+    image: '/assets/menu_full/chips_medium.jpg',
     description: 'Crispy golden battered hake fillet served with hot seasoned chips or a crisp fresh side salad.',
     popular: true,
     badge: 'Crispy Golden Hake',
   },
 
-  // Supreme Kota (Full authentic images with background)
+  // Supreme Kota (Full authentic images with rustic wooden table background)
   {
     id: 'mince-kota',
     name: 'Supreme Mince Kota (with Aromat)',
     category: 'kota',
-    price: 50,
+    price: 35,
     image: '/assets/menu_full/mince_kota.jpg',
     description: 'Supreme Kota stuffed with savoury seasoned beef mince, crispy chips, fried egg, melted cheese, and atchar.',
     popular: true,
-    badge: 'Granny’s Special Mince',
+    badge: 'Granny’s Special Mince • R35',
   },
   {
     id: 'kota-base',
@@ -155,7 +155,7 @@ export const MENU_ITEMS: MenuItem[] = [
     image: '/assets/menu_full/supreme_kota.jpg',
     description: 'Hollowed fresh quarter loaf stuffed with crispy hot chips, melted cheese, fried egg, and spicy mango atchar.',
     popular: true,
-    badge: 'Fourways Commuter Favourite',
+    badge: 'Commuter Favourite • R35',
   },
 
   // Breakfast & Amagwinya (Full authentic image with background)

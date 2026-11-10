@@ -7,6 +7,7 @@ import { MenuItem } from './data/menuData';
 import { TakeawayBagModal } from './components/TakeawayBagModal';
 import { LocationGuide } from './components/LocationGuide';
 import { HomelyAtmosphere } from './components/HomelyAtmosphere';
+import { ServiceWithLovePage } from './components/ServiceWithLovePage';
 import {
   ShoppingBag,
   ArrowDown,
@@ -18,13 +19,14 @@ import {
   Sparkles,
   Check,
   Heart,
+  Users,
 } from 'lucide-react';
 import { useRestaurantStatus } from './utils/operatingHours';
 
 export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isBagOpen, setIsBagOpen] = useState(false);
-  const [currentPage, setCurrentPage] = useState<'summary' | 'full-menu' | 'story'>('summary');
+  const [currentPage, setCurrentPage] = useState<'summary' | 'full-menu' | 'story' | 'service'>('summary');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [configuringItem, setConfiguringItem] = useState<MenuItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
@@ -110,6 +112,12 @@ export default function App() {
     scrollToMenu();
   };
 
+  const handleGoToService = () => {
+    setConfiguringItem(null);
+    setCurrentPage('service');
+    scrollToMenu();
+  };
+
   return (
     <div className="min-h-screen bg-[#1c1d20] text-[#2c1810] font-body relative overflow-x-hidden">
       {/* 1. SLIDING BRICK CURTAIN REVEAL SYSTEM:
@@ -147,10 +155,10 @@ export default function App() {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <button
                     onClick={handleGoToStory}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all active:scale-95 cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all active:scale-95 cursor-pointer ${
                       currentPage === 'story'
                         ? 'bg-[#8b1d20] text-white border border-[#e5a84b]/60'
                         : 'bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4]'
@@ -161,8 +169,20 @@ export default function App() {
                   </button>
 
                   <button
+                    onClick={handleGoToService}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all active:scale-95 cursor-pointer ${
+                      currentPage === 'service'
+                        ? 'bg-[#8b1d20] text-white border border-[#e5a84b]/60'
+                        : 'bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4]'
+                    }`}
+                  >
+                    <Users className="w-3.5 h-3.5 text-[#e5a84b]" />
+                    <span>Served with Love</span>
+                  </button>
+
+                  <button
                     onClick={currentPage === 'summary' ? () => handleGoToFullMenu() : handleBackToSummary}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer"
                   >
                     <Utensils className="w-3.5 h-3.5 text-[#e5a84b]" />
                     <span>
@@ -177,14 +197,14 @@ export default function App() {
                 </div>
               </div>
 
-              {/* 4. THE THREE-PAGE NAVIGATION SWITCHER (Page 1: Summary, Page 2: Complete Menu, Page 3: Our Story) */}
-              <div className="max-w-3xl mx-auto px-4 mt-6">
+              {/* 4. THE FOUR-PAGE NAVIGATION SWITCHER (Summary, Full Menu, Our Story, Served With Love) */}
+              <div className="max-w-4xl mx-auto px-4 mt-6">
                 <div className="bg-[#ebdccb] p-1.5 rounded-2xl border-2 border-[#8b1d20]/40 shadow-md">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5">
                     {/* PAGE 1: MENU SUMMARY */}
                     <button
                       onClick={() => handleBackToSummary()}
-                      className={`relative py-3 px-3 sm:px-4 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
+                      className={`relative py-3 px-3 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
                         currentPage === 'summary'
                           ? 'bg-scottish-tartan text-[#2e1315] border-2 border-[#8b1d20] shadow-md ring-2 ring-[#e5a84b]/50'
                           : 'bg-[#fffdf9]/70 hover:bg-[#fffdf9] text-[#553b30] border border-transparent'
@@ -211,7 +231,7 @@ export default function App() {
                           )}
                         </div>
                         <p className="text-[11px] text-[#6d4d3d] font-body font-medium leading-tight truncate">
-                          1 Hero Dish per Category
+                          Hero Dishes Showcase
                         </p>
                       </div>
                     </button>
@@ -219,7 +239,7 @@ export default function App() {
                     {/* PAGE 2: COMPLETE MENU */}
                     <button
                       onClick={() => handleGoToFullMenu()}
-                      className={`relative py-3 px-3 sm:px-4 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
+                      className={`relative py-3 px-3 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
                         currentPage === 'full-menu'
                           ? 'bg-scottish-tartan text-[#2e1315] border-2 border-[#8b1d20] shadow-md ring-2 ring-[#e5a84b]/50'
                           : 'bg-[#fffdf9]/70 hover:bg-[#fffdf9] text-[#553b30] border border-transparent'
@@ -246,7 +266,7 @@ export default function App() {
                           )}
                         </div>
                         <p className="text-[11px] text-[#6d4d3d] font-body font-medium leading-tight truncate">
-                          All 15+ Dishes & Toppings
+                          All 15+ Dishes & Sides
                         </p>
                       </div>
                     </button>
@@ -254,7 +274,7 @@ export default function App() {
                     {/* PAGE 3: OUR STORY */}
                     <button
                       onClick={handleGoToStory}
-                      className={`relative py-3 px-3 sm:px-4 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
+                      className={`relative py-3 px-3 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
                         currentPage === 'story'
                           ? 'bg-scottish-tartan text-[#2e1315] border-2 border-[#8b1d20] shadow-md ring-2 ring-[#e5a84b]/50'
                           : 'bg-[#fffdf9]/70 hover:bg-[#fffdf9] text-[#553b30] border border-transparent'
@@ -285,11 +305,46 @@ export default function App() {
                         </p>
                       </div>
                     </button>
+
+                    {/* PAGE 4: SERVED WITH LOVE */}
+                    <button
+                      onClick={handleGoToService}
+                      className={`relative py-3 px-3 rounded-xl transition-all duration-200 cursor-pointer flex items-center justify-center sm:justify-start gap-2.5 text-center sm:text-left ${
+                        currentPage === 'service'
+                          ? 'bg-scottish-tartan text-[#2e1315] border-2 border-[#8b1d20] shadow-md ring-2 ring-[#e5a84b]/50'
+                          : 'bg-[#fffdf9]/70 hover:bg-[#fffdf9] text-[#553b30] border border-transparent'
+                      }`}
+                    >
+                      <div
+                        className={`p-2 rounded-lg shrink-0 ${
+                          currentPage === 'service'
+                            ? 'bg-[#2b1812] text-[#e5a84b]'
+                            : 'bg-[#e2d0be] text-[#553b30]'
+                        }`}
+                      >
+                        <Users className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-1.5 justify-center sm:justify-start">
+                          <span className="font-condensed font-extrabold uppercase text-xs sm:text-sm tracking-wider truncate">
+                            Served With Love
+                          </span>
+                          {currentPage === 'service' && (
+                            <span className="text-[9px] font-bold bg-[#2b1812] text-[#fad194] px-1 py-0.2 rounded shrink-0">
+                              ACTIVE
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-[#6d4d3d] font-body font-medium leading-tight truncate">
+                          Our Team & Principles
+                        </p>
+                      </div>
+                    </button>
                   </div>
                 </div>
               </div>
 
-              {/* 5. ACTIVE PAGE CONTENT (Page 1 Summary, Page 2 Full Menu, or Page 3 Dedicated Story) */}
+              {/* 5. ACTIVE PAGE CONTENT */}
               <div id="menu-section" className="mt-6">
                 {currentPage === 'summary' && (
                   <div className="px-4">
@@ -299,6 +354,8 @@ export default function App() {
                       onOpenConfigurator={handleOpenConfigurator}
                       onOpenCart={() => setIsBagOpen(true)}
                       cartCount={totalItemsCount}
+                      onGoToService={handleGoToService}
+                      onGoToStory={handleGoToStory}
                     />
                   </div>
                 )}
@@ -321,6 +378,15 @@ export default function App() {
                     onOpenOrder={() => setIsBagOpen(true)}
                   />
                 )}
+
+                {currentPage === 'service' && (
+                  <ServiceWithLovePage
+                    onGoToSummary={handleBackToSummary}
+                    onGoToFullMenu={() => handleGoToFullMenu()}
+                    onGoToStory={handleGoToStory}
+                    onOpenOrder={() => setIsBagOpen(true)}
+                  />
+                )}
               </div>
 
               {/* 6. Fourways Mall BTC05 Taxi Terminal Guide */}
@@ -337,13 +403,20 @@ export default function App() {
                 <p className="text-xs text-[#75594b] mt-1 font-body">
                   Authentic South African Home-Cooked Food • Slow pots, hearty kotas, crispy Aromat chips, fresh salads, and warm hospitality.
                 </p>
-                <div className="flex items-center justify-center gap-2 text-xs font-bold text-[#8b1d20] mt-2.5">
+                <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-[#8b1d20] mt-3">
                   <button
                     onClick={handleGoToStory}
                     className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1 rounded-full border border-[#d8c3ad]"
                   >
                     <Heart className="w-3 h-3 text-[#e5a84b] fill-[#e5a84b]" />
-                    <span>Our Story: Since 1997 • Mam Nomsa "Granny" Moeketsi</span>
+                    <span>Our Story: Since 1997</span>
+                  </button>
+                  <button
+                    onClick={handleGoToService}
+                    className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1 rounded-full border border-[#d8c3ad]"
+                  >
+                    <Users className="w-3 h-3 text-[#e5a84b]" />
+                    <span>Served with Love: Our Team & Principles</span>
                   </button>
                 </div>
                 <div className="flex items-center justify-center gap-4 text-xs font-semibold text-[#663b28] mt-3">

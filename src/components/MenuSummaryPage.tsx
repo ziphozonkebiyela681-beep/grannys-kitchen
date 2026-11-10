@@ -10,6 +10,7 @@ import {
   MapPin,
   Heart,
   ChevronRight,
+  Users,
 } from 'lucide-react';
 import { CartItem } from './MenuSection';
 import { MenuItem, MENU_ITEMS } from '../data/menuData';
@@ -21,6 +22,8 @@ interface MenuSummaryPageProps {
   onOpenConfigurator: (item: MenuItem) => void;
   onOpenCart: () => void;
   cartCount: number;
+  onGoToService?: () => void;
+  onGoToStory?: () => void;
 }
 
 interface CategoryHighlight {
@@ -67,7 +70,7 @@ const CATEGORY_HIGHLIGHTS: CategoryHighlight[] = [
     badge: 'Fresh From The Fryer',
     accentColor: '#96381a',
     itemCountText: '4 Chip Sizes & Combos',
-    featuredItemId: 'fish-chips',
+    featuredItemId: 'fish-and-chips',
     customDescription:
       'Golden, crispy on the edges, fluffy inside, generously dusted in South African Aromat seasoning. Paired with crispy battered hake fillets.',
     servingTime: 'Cooked fresh on order',
@@ -116,6 +119,8 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
   onOpenConfigurator,
   onOpenCart,
   cartCount,
+  onGoToService,
+  onGoToStory,
 }) => {
   const status = useRestaurantStatus();
 
@@ -298,6 +303,51 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
           );
         })}
       </div>
+
+      {/* 2.5 Team Spotlight: Served With Love */}
+      {onGoToService && (
+        <div className="bg-[#fffcf7] border-2 border-[#decbb7] rounded-2xl p-5 sm:p-7 shadow-md overflow-hidden relative">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+            <div className="md:col-span-5 flex flex-col items-center">
+              <div className="relative p-1.5 bg-scottish-tartan rounded-xl shadow-lg border border-[#8b1d20]/50 max-w-[260px] w-full">
+                <div className="overflow-hidden rounded-lg border border-[#e5a84b]/60 bg-[#1c1d20]">
+                  <img
+                    src="/assets/team/our_waiters.jpg"
+                    alt="The Granny's Kitchen Team in Uniform"
+                    className="w-full h-auto object-cover object-top"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="md:col-span-7 space-y-3 text-center md:text-left">
+              <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#8b1d20] uppercase tracking-wider font-condensed bg-[#f7eedf] px-3 py-1 rounded-full border border-[#d8c3ad]">
+                <Users className="w-3.5 h-3.5 text-[#e5a84b]" />
+                <span>Good Service With Love</span>
+              </div>
+
+              <h3 className="font-display text-2xl sm:text-3xl text-[#361a15] uppercase tracking-wide leading-tight">
+                "Served With Love • Like Family"
+              </h3>
+
+              <p className="text-xs sm:text-sm text-[#5f473b] leading-relaxed font-body">
+                Our waitstaff carry the principles instilled by Mam Nomsa: welcoming every guest with genuine warmth, generous hands, and sincere township hospitality at Fourways Mall BTC05.
+              </p>
+
+              <div className="pt-1">
+                <button
+                  onClick={onGoToService}
+                  className="py-2.5 px-5 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-lg transition-all active:scale-95 inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <Users className="w-4 h-4 text-[#e5a84b]" />
+                  <span>Read About Our Team & Principles →</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 3. Bottom Big Banner to encourage navigating to the full menu */}
       <div className="relative rounded-2xl overflow-hidden border-2 border-[#8b1d20]/50 shadow-xl bg-scottish-tartan p-2">

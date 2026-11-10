@@ -62,8 +62,13 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
 
   const handleSendWhatsApp = () => {
     const text = encodeURIComponent(generateOrderText());
-    // Direct WhatsApp send link
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    const link = document.createElement('a');
+    link.href = `https://wa.me/?text=${text}`;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const handleCopyOrder = () => {
