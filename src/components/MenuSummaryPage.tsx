@@ -229,24 +229,21 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
                   )}
                 </div>
 
-                {/* Plate Image Showcase */}
-                <div className="w-full flex items-center justify-center py-3 my-1">
-                  <div className="relative w-48 h-44 sm:w-56 sm:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                    {/* Realistic soft radial shadow under the floating plate */}
-                    <div className="absolute inset-4 rounded-full bg-black/25 blur-md -bottom-2 pointer-events-none transform scale-90" />
-                    {item.image ? (
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-contain relative z-10 drop-shadow-[0_12px_16px_rgba(40,15,10,0.3)] filter"
-                        referrerPolicy="no-referrer"
-                      />
-                    ) : (
-                      <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                        <Utensils className="w-8 h-8 text-[#8b1d20]" />
-                      </div>
-                    )}
-                  </div>
+                {/* Full Authentic Food Image with Background */}
+                <div className="w-full h-52 sm:h-56 rounded-xl overflow-hidden my-2 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                    />
+                  ) : (
+                    <div className="w-full h-full rounded-xl bg-[#e8dac7] flex items-center justify-center">
+                      <Utensils className="w-8 h-8 text-[#8b1d20]" />
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                 </div>
 
                 {/* Dish Info Underneath Plate */}

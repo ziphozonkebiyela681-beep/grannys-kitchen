@@ -269,24 +269,21 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Top: Isolated Carved Plate Image */}
-                        <div className="w-full flex items-center justify-center py-2">
-                          <div className="relative w-52 h-44 sm:w-60 sm:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            {/* Realistic soft radial shadow under the floating plate */}
-                            <div className="absolute inset-4 rounded-full bg-black/25 blur-md -bottom-2 pointer-events-none transform scale-90" />
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_12px_16px_rgba(40,15,10,0.3)] filter"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                                <Flame className="w-8 h-8 text-[#8b1d20]" />
-                              </div>
-                            )}
-                          </div>
+                        {/* Full Food Photograph with Natural Background */}
+                        <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                              <Flame className="w-10 h-10 text-[#e5a84b]" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -370,24 +367,21 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Top: Isolated Carved Plate Image */}
-                        <div className="w-full flex items-center justify-center py-2">
-                          <div className="relative w-48 h-48 sm:w-52 sm:h-52 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            {/* Realistic soft radial shadow under the floating plate */}
-                            <div className="absolute inset-4 rounded-full bg-black/25 blur-md -bottom-2 pointer-events-none transform scale-90" />
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_12px_16px_rgba(40,15,10,0.3)] filter"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                                <Utensils className="w-8 h-8 text-[#8b1d20]" />
-                              </div>
-                            )}
-                          </div>
+                        {/* Full Food Photograph with Natural Background */}
+                        <div className="w-full h-48 sm:h-52 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                              <Utensils className="w-10 h-10 text-[#e5a84b]" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -477,24 +471,21 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Top: Isolated Carved Plate Image */}
-                        <div className="w-full flex items-center justify-center py-2">
-                          <div className="relative w-40 h-40 sm:w-44 sm:h-44 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            {/* Realistic soft radial shadow under the floating plate */}
-                            <div className="absolute inset-3 rounded-full bg-black/20 blur-md -bottom-1 pointer-events-none transform scale-90" />
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_10px_14px_rgba(40,15,10,0.28)] filter"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                                <Sparkles className="w-8 h-8 text-[#8b1d20]" />
-                              </div>
-                            )}
-                          </div>
+                        {/* Full Food Photograph with Natural Background */}
+                        <div className="w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                              <Sparkles className="w-8 h-8 text-[#e5a84b]" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -577,24 +568,21 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Top: Isolated Carved Plate Image */}
-                        <div className="w-full flex items-center justify-center py-2">
-                          <div className="relative w-56 h-44 sm:w-64 sm:h-52 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            {/* Realistic soft radial shadow under the floating plate */}
-                            <div className="absolute inset-4 rounded-full bg-black/25 blur-md -bottom-2 pointer-events-none transform scale-90" />
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_12px_16px_rgba(40,15,10,0.3)] filter"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                                <Utensils className="w-8 h-8 text-[#8b1d20]" />
-                              </div>
-                            )}
-                          </div>
+                        {/* Full Food Photograph with Natural Background */}
+                        <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                              <Utensils className="w-10 h-10 text-[#e5a84b]" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -690,24 +678,21 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Top: Isolated Carved Plate Image */}
-                        <div className="w-full flex items-center justify-center py-2">
-                          <div className="relative w-56 h-44 sm:w-64 sm:h-52 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            {/* Realistic soft radial shadow under the floating plate */}
-                            <div className="absolute inset-4 rounded-full bg-black/25 blur-md -bottom-2 pointer-events-none transform scale-90" />
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_12px_16px_rgba(40,15,10,0.3)] filter"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                                <Sparkles className="w-8 h-8 text-[#8b1d20]" />
-                              </div>
-                            )}
-                          </div>
+                        {/* Full Food Photograph with Natural Background */}
+                        <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                              <Sparkles className="w-10 h-10 text-[#e5a84b]" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Plate */}
@@ -808,23 +793,21 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Top: Isolated Carved Bowl Image */}
-                        <div className="w-full flex items-center justify-center py-2">
-                          <div className="relative w-52 h-44 sm:w-60 sm:h-48 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
-                            <div className="absolute inset-4 rounded-full bg-black/25 blur-md -bottom-2 pointer-events-none transform scale-90" />
-                            {item.image ? (
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain relative z-10 drop-shadow-[0_12px_16px_rgba(40,15,10,0.3)] filter"
-                                referrerPolicy="no-referrer"
-                              />
-                            ) : (
-                              <div className="w-full h-full rounded-full bg-[#e8dac7] flex items-center justify-center">
-                                <Utensils className="w-8 h-8 text-[#8b1d20]" />
-                              </div>
-                            )}
-                          </div>
+                        {/* Full Food Photograph with Natural Background */}
+                        <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          {item.image ? (
+                            <img
+                              src={item.image}
+                              alt={item.name}
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                              <Utensils className="w-10 h-10 text-[#e5a84b]" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Bowl */}
@@ -885,14 +868,15 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
             {/* Top Tartan Accent */}
             <div className="absolute inset-x-0 top-0 h-1.5 bg-scottish-tartan rounded-t-xl" />
 
-            {/* Top Image if meal has an isolated plate */}
+            {/* Top Food Image with Natural Background */}
             {configuringItem.image && (
-              <div className="w-36 h-36 sm:w-44 sm:h-44 mx-auto mb-2 flex items-center justify-center">
+              <div className="w-full h-44 sm:h-52 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
                 <img
                   src={configuringItem.image}
                   alt={configuringItem.name}
-                  className="w-full h-full object-contain drop-shadow-[0_10px_14px_rgba(0,0,0,0.3)] filter"
+                  className="w-full h-full object-cover object-center"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
               </div>
             )}
 
