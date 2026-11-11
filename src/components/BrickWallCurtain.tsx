@@ -36,14 +36,14 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
 
       {/* Floating Curtain Control to easily replay or close the brick entrance */}
       {isRevealed && (
-        <div className="fixed bottom-5 right-5 z-40 flex items-center gap-2 bg-[#2d1b14]/90 backdrop-blur-md text-[#f7eedf] border border-[#e5a84b]/40 px-3.5 py-2 rounded-full shadow-xl hover:bg-[#3d241c] transition-all text-xs font-semibold cursor-pointer select-none">
+        <div className="fixed bottom-20 right-5 xl:bottom-5 xl:right-64 z-30 flex items-center gap-2 bg-[#2d1b14]/90 backdrop-blur-md text-[#f7eedf] border border-[#e5a84b]/40 px-3 py-1.5 rounded-full shadow-xl hover:bg-[#3d241c] transition-all text-xs font-semibold cursor-pointer select-none">
           <button
             onClick={handleToggle}
-            className="flex items-center gap-2 focus:outline-none cursor-pointer"
+            className="flex items-center gap-1.5 focus:outline-none cursor-pointer"
             title="Re-close Brick Doors"
           >
             <RefreshCw className="w-3.5 h-3.5 text-[#e5a84b]" />
-            <span>Close Brick Doors</span>
+            <span>Brick Doors</span>
           </button>
         </div>
       )}
@@ -66,10 +66,10 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
             opacity: isRevealed ? 0 : 1,
           }}
           transition={{
-            duration: 1.2,
-            ease: [0.16, 1, 0.3, 1], // Smooth organic deceleration
+            duration: 2.4, // Slower slide for dramatic anticipation of revelation
+            ease: [0.22, 1, 0.36, 1], // Smooth cinematic deceleration
           }}
-          style={{ width: '52vw' }}
+          style={{ width: '54vw' }}
         >
           <div
             className="w-full h-full relative shadow-[-16px_0_40px_rgba(0,0,0,0.85)] border-r-2 border-black/50"
@@ -94,10 +94,10 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
             opacity: isRevealed ? 0 : 1,
           }}
           transition={{
-            duration: 1.2,
-            ease: [0.16, 1, 0.3, 1],
+            duration: 2.4, // Slower slide for dramatic anticipation of revelation
+            ease: [0.22, 1, 0.36, 1],
           }}
-          style={{ width: '52vw' }}
+          style={{ width: '54vw' }}
         >
           <div
             className="w-full h-full relative shadow-[16px_0_40px_rgba(0,0,0,0.85)] border-l-2 border-black/50"
@@ -120,12 +120,12 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center p-3 sm:p-6 pointer-events-auto bg-black/60 backdrop-blur-[2px] select-none overflow-y-auto overflow-x-hidden"
           >
-            {/* Center Area with Red Bistro Chairs flanking the Step Inside bar */}
-            <div className="relative max-w-xl w-full flex items-center justify-center my-auto py-2">
-              {/* Left Red Bistro Chair */}
+            {/* Center Area with Red Bistro Chairs flanking on desktop & below on vertical phones */}
+            <div className="relative max-w-xl w-full flex flex-col items-center justify-center my-auto py-2">
+              {/* Left Red Bistro Chair (Desktop & Tablet flanking) */}
               <div className="hidden sm:block absolute -left-8 md:-left-16 lg:-left-24 bottom-2 md:bottom-3 w-20 md:w-28 lg:w-36 pointer-events-none select-none z-20">
                 <img
                   src="/assets/decorations/red_bistro_chair_left.png"
@@ -134,8 +134,8 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
                 />
               </div>
 
-              {/* Central Welcome Card */}
-              <div className="max-w-lg w-full relative z-10 p-1.5 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50 max-h-[90vh] flex flex-col">
+              {/* Central Welcome Card (The Description Cube) */}
+              <div className="max-w-lg w-full relative z-10 p-1.5 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50 max-h-[85vh] sm:max-h-[90vh] flex flex-col">
                 <div className="bg-[#fffdf9] rounded-xl p-4 sm:p-7 text-center border border-[#e5a84b]/40 overflow-y-auto">
                   {/* The EXACT Granny's Kitchen Logo Graphic */}
                   <div className="w-full flex items-center justify-center mb-4 px-2">
@@ -168,11 +168,11 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
                   </p>
 
                   {/* Operating Hours Note */}
-                  <p className="text-[11px] sm:text-xs text-[#785341] font-semibold mb-3">
+                  <p className="text-[11px] sm:text-xs text-[#785341] font-semibold mb-2.5">
                     Hours: {status.hoursText} <span className="opacity-70">({status.currentTimeStr})</span>
                   </p>
 
-                  <p className="text-xs sm:text-sm text-[#5c4a3b] mb-5 font-body leading-relaxed px-1">
+                  <p className="text-xs sm:text-sm text-[#5c4a3b] mb-4 font-body leading-relaxed px-1">
                     {status.isOpen
                       ? "Welcome to Granny's Kitchen! Step inside to explore our home-cooked meals, flame-grilled chicken dust, rich stews, supreme kotas, fresh vetkoek, and crisp salads."
                       : "The kitchen is currently closed for the night. You can step inside to browse our full menu, dishes, and prices ahead of opening!"}
@@ -189,13 +189,30 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
                 </div>
               </div>
 
-              {/* Right Red Bistro Chair */}
-              <div className="hidden sm:block absolute -right-16 md:-right-24 lg:-right-28 bottom-1 md:bottom-2 w-28 md:w-36 lg:w-40 pointer-events-none select-none z-20">
+              {/* Right Red Bistro Chair (Desktop & Tablet flanking) */}
+              <div className="hidden sm:block absolute -right-8 md:-right-16 lg:-right-24 bottom-2 md:bottom-3 w-22 md:w-32 lg:w-40 pointer-events-none select-none z-20">
                 <img
                   src="/assets/decorations/red_bistro_chair_right.png"
                   alt="Red Bistro Chair"
                   className="w-full h-auto drop-shadow-[8px_14px_18px_rgba(0,0,0,0.75)] transform rotate-2"
                 />
+              </div>
+
+              {/* Vertical Phone Entrance Setup: Table and Red Chairs setup positioned directly BELOW the description cube */}
+              <div className="block sm:hidden w-full max-w-[280px] mx-auto mt-2.5 pt-1 text-center pointer-events-none select-none z-20 animate-fade-in">
+                <div className="relative">
+                  <img
+                    src="/assets/decorations/bistro_table_and_chairs.png"
+                    alt="Granny's Kitchen Bistro Dining Table & Chairs"
+                    className="w-full h-auto drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)]"
+                  />
+                </div>
+                <div className="mt-1 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 border border-[#e5a84b]/40">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#e5a84b] animate-pulse" />
+                  <span className="text-[10px] text-[#f7eedf] font-condensed uppercase tracking-wider font-bold">
+                    Eat In or Take Away • A warm table awaits you
+                  </span>
+                </div>
               </div>
             </div>
           </motion.div>

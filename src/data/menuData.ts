@@ -1,3 +1,52 @@
+export interface AromatInfo {
+  name: string;
+  type: 'original' | 'cheese' | 'chilli_beef' | 'peri_peri';
+  image: string;
+  accentColor: string;
+  badgeBg: string;
+  badgeText: string;
+  description: string;
+}
+
+export const AROMAT_VARIETIES: Record<string, AromatInfo> = {
+  original: {
+    name: 'Aromat Original',
+    type: 'original',
+    image: '/assets/aromat/aromat_original.png',
+    accentColor: '#dc2626',
+    badgeBg: 'bg-red-700',
+    badgeText: 'Aromat Original',
+    description: 'Iconic South African red-cap classic seasoning.',
+  },
+  cheese: {
+    name: 'Aromat Cheese',
+    type: 'cheese',
+    image: '/assets/aromat/aromat_cheese.png',
+    accentColor: '#ca8a04',
+    badgeBg: 'bg-amber-600',
+    badgeText: 'Aromat Cheese',
+    description: 'Rich, melted golden cheese flavour dusted on hot food.',
+  },
+  chilli_beef: {
+    name: 'Aromat Chilli Beef',
+    type: 'chilli_beef',
+    image: '/assets/aromat/aromat_chilli_beef.png',
+    accentColor: '#881337',
+    badgeBg: 'bg-rose-900',
+    badgeText: 'Aromat Chilli Beef',
+    description: 'Savoury spiced beef flavour with a fiery chilli kick.',
+  },
+  peri_peri: {
+    name: 'Aromat Peri-Peri',
+    type: 'peri_peri',
+    image: '/assets/aromat/aromat_peri_peri.png',
+    accentColor: '#ea580c',
+    badgeBg: 'bg-orange-700',
+    badgeText: 'Aromat Peri-Peri',
+    description: 'Tangy, zesty heat with African bird’s eye chilli.',
+  },
+};
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -10,6 +59,8 @@ export interface MenuItem {
   options?: { name: string; price: number }[];
   popular?: boolean;
   badge?: string;
+  aromatSeasoning?: AromatInfo;
+  aromatPlacement?: 'beside' | 'behind';
 }
 
 export const STARCH_CHOICES = [
@@ -82,9 +133,11 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'chicken_dust',
     price: 45,
     image: '/assets/menu_full/chicken_dust_chips.jpg',
-    description: 'Crispy charcoal braai seasoned chicken quarter leg served with golden chips dusted in Aromat.',
+    description: 'Crispy charcoal braai seasoned chicken quarter leg served with golden chips dusted in fiery Aromat Peri-Peri.',
     popular: true,
     badge: 'Flame Seasoned • R45',
+    aromatSeasoning: AROMAT_VARIETIES.peri_peri,
+    aromatPlacement: 'beside',
   },
   {
     id: 'chicken-dust-pap',
@@ -104,26 +157,32 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'chips',
     price: 20,
     image: '/assets/menu_full/chips_small.jpg',
-    description: 'Fresh hand-cut golden potatoes, fried crisp and generously dusted with savoury Aromat.',
+    description: 'Fresh hand-cut golden potatoes, fried crisp and generously dusted with savoury Aromat Original.',
+    aromatSeasoning: AROMAT_VARIETIES.original,
+    aromatPlacement: 'beside',
   },
   {
     id: 'chips-medium',
     name: 'Medium Crispy Chips (with Aromat)',
     category: 'chips',
     price: 25,
-    image: '/assets/menu_full/fish_and_chips.jpg',
-    description: 'Generous portion of hot crispy chips tossed in Granny’s signature Aromat seasoning.',
+    image: '/assets/menu_full/chips_large.jpg',
+    description: 'Generous portion of hot crispy chips tossed in Granny’s signature Aromat Cheese seasoning.',
     popular: true,
+    aromatSeasoning: AROMAT_VARIETIES.cheese,
+    aromatPlacement: 'beside',
   },
   {
     id: 'chips-large',
     name: 'Large Crispy Chips (with Aromat)',
     category: 'chips',
     price: 35,
-    image: '/assets/menu_full/chips_large.jpg',
-    description: 'Big sharing portion of crispy golden chips with that unforgettable yellow Aromat punch.',
+    image: '/assets/menu_full/fish_and_chips.jpg',
+    description: 'Big sharing portion of crispy golden chips with that unforgettable spicy Aromat Peri-Peri punch.',
     popular: true,
     badge: 'Sharing Size',
+    aromatSeasoning: AROMAT_VARIETIES.peri_peri,
+    aromatPlacement: 'behind',
   },
   {
     id: 'fish-and-chips',
@@ -131,9 +190,11 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'chips',
     price: 70,
     image: '/assets/menu_full/chips_medium.jpg',
-    description: 'Crispy golden battered hake fillet served with hot seasoned chips or a crisp fresh side salad.',
+    description: 'Crispy golden battered hake fillet served with hot seasoned chips dusted in classic Aromat Original.',
     popular: true,
     badge: 'Crispy Golden Hake',
+    aromatSeasoning: AROMAT_VARIETIES.original,
+    aromatPlacement: 'behind',
   },
 
   // Supreme Kota (Full authentic images with rustic wooden table background)
@@ -143,9 +204,11 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'kota',
     price: 35,
     image: '/assets/menu_full/mince_kota.jpg',
-    description: 'Supreme Kota stuffed with savoury seasoned beef mince, crispy chips, fried egg, melted cheese, and atchar.',
+    description: 'Supreme Kota stuffed with savoury seasoned beef mince dusted in Aromat Chilli Beef, crispy chips, fried egg, melted cheese, and atchar.',
     popular: true,
     badge: 'Granny’s Special Mince • R35',
+    aromatSeasoning: AROMAT_VARIETIES.chilli_beef,
+    aromatPlacement: 'beside',
   },
   {
     id: 'kota-base',
@@ -153,9 +216,11 @@ export const MENU_ITEMS: MenuItem[] = [
     category: 'kota',
     price: 35,
     image: '/assets/menu_full/supreme_kota.jpg',
-    description: 'Hollowed fresh quarter loaf stuffed with crispy hot chips, melted cheese, fried egg, and spicy mango atchar.',
+    description: 'Hollowed fresh quarter loaf stuffed with crispy hot chips tossed in Aromat Cheese, melted cheese, fried egg, and spicy mango atchar.',
     popular: true,
     badge: 'Commuter Favourite • R35',
+    aromatSeasoning: AROMAT_VARIETIES.cheese,
+    aromatPlacement: 'beside',
   },
 
   // Breakfast & Amagwinya (Full authentic image with background)

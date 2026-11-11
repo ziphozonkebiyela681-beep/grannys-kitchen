@@ -10,6 +10,7 @@ import {
 } from '../data/menuData';
 import { Plus, Check, ShoppingBag, Utensils, Flame, Sparkles, Clock, ArrowLeft } from 'lucide-react';
 import { useRestaurantStatus } from '../utils/operatingHours';
+import { AromatSeasoningBadge, AromatFlavourBar } from './AromatSeasoningBadge';
 
 export interface CartItem {
   cartId: string;
@@ -162,11 +163,11 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
             className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
           >
             <ArrowLeft className="w-4 h-4 text-[#8b1d20]" />
-            <span>← Back to Menu Summary (Page 1)</span>
+            <span>← Back to Home</span>
           </button>
           <div className="text-right hidden sm:block">
             <span className="text-xs font-bold text-[#8b1d20] uppercase tracking-wider font-condensed">
-              Page 2 • Complete Menu
+              Full Menu
             </span>
             <p className="text-[11px] text-[#735041]">All 15+ dishes, starches & toppings</p>
           </div>
@@ -367,21 +368,32 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Full Food Photograph with Natural Background */}
-                        <div className="w-full h-48 sm:h-52 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
-                          {item.image ? (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                              referrerPolicy="no-referrer"
+                        {/* Full Food Photograph with Natural Background & Aromat Shaker */}
+                        <div className="w-full h-48 sm:h-52 rounded-xl overflow-visible mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          <div className="w-full h-full rounded-xl overflow-hidden relative">
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                                referrerPolicy="no-referrer"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                                <Utensils className="w-10 h-10 text-[#e5a84b]" />
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                          </div>
+
+                          {/* Aromat Shaker beside or behind the plate */}
+                          {item.aromatSeasoning && (
+                            <AromatSeasoningBadge
+                              aromat={item.aromatSeasoning}
+                              placement={item.aromatPlacement || 'beside'}
+                              size="sm"
                             />
-                          ) : (
-                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
-                              <Utensils className="w-10 h-10 text-[#e5a84b]" />
-                            </div>
                           )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -454,6 +466,9 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                   </p>
                 </div>
 
+                {/* Aromat Flavour Bar */}
+                <AromatFlavourBar />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
                   {filteredItems
                     .filter((item) => item.category === 'chips')
@@ -471,21 +486,32 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Full Food Photograph with Natural Background */}
-                        <div className="w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
-                          {item.image ? (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                              referrerPolicy="no-referrer"
+                        {/* Full Food Photograph with Natural Background & Aromat Shaker */}
+                        <div className="w-full h-40 sm:h-44 rounded-xl overflow-visible mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          <div className="w-full h-full rounded-xl overflow-hidden relative">
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                                referrerPolicy="no-referrer"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                                <Sparkles className="w-8 h-8 text-[#e5a84b]" />
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                          </div>
+
+                          {/* Aromat Shaker beside or behind the plate */}
+                          {item.aromatSeasoning && (
+                            <AromatSeasoningBadge
+                              aromat={item.aromatSeasoning}
+                              placement={item.aromatPlacement || 'beside'}
+                              size="sm"
                             />
-                          ) : (
-                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
-                              <Sparkles className="w-8 h-8 text-[#e5a84b]" />
-                            </div>
                           )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -568,21 +594,32 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
                           </div>
                         )}
 
-                        {/* Full Food Photograph with Natural Background */}
-                        <div className="w-full h-48 sm:h-56 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
-                          {item.image ? (
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                              referrerPolicy="no-referrer"
+                        {/* Full Food Photograph with Natural Background & Aromat Shaker */}
+                        <div className="w-full h-48 sm:h-56 rounded-xl overflow-visible mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                          <div className="w-full h-full rounded-xl overflow-hidden relative">
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                                referrerPolicy="no-referrer"
+                              />
+                            ) : (
+                              <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
+                                <Utensils className="w-10 h-10 text-[#e5a84b]" />
+                              </div>
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                          </div>
+
+                          {/* Aromat Shaker beside or behind the plate */}
+                          {item.aromatSeasoning && (
+                            <AromatSeasoningBadge
+                              aromat={item.aromatSeasoning}
+                              placement={item.aromatPlacement || 'beside'}
+                              size="md"
                             />
-                          ) : (
-                            <div className="w-full h-full bg-[#301c15] flex items-center justify-center">
-                              <Utensils className="w-10 h-10 text-[#e5a84b]" />
-                            </div>
                           )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
                         </div>
 
                         {/* Bottom: Description & Price Underneath Each Plate */}
@@ -868,15 +905,25 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
             {/* Top Tartan Accent */}
             <div className="absolute inset-x-0 top-0 h-1.5 bg-scottish-tartan rounded-t-xl" />
 
-            {/* Top Food Image with Natural Background */}
+            {/* Top Food Image with Natural Background & Aromat Shaker */}
             {configuringItem.image && (
-              <div className="w-full h-44 sm:h-52 rounded-xl overflow-hidden mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
-                <img
-                  src={configuringItem.image}
-                  alt={configuringItem.name}
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+              <div className="w-full h-44 sm:h-52 rounded-xl overflow-visible mb-3 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                <div className="w-full h-full rounded-xl overflow-hidden relative">
+                  <img
+                    src={configuringItem.image}
+                    alt={configuringItem.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                </div>
+
+                {configuringItem.aromatSeasoning && (
+                  <AromatSeasoningBadge
+                    aromat={configuringItem.aromatSeasoning}
+                    placement={configuringItem.aromatPlacement || 'beside'}
+                    size="sm"
+                  />
+                )}
               </div>
             )}
 

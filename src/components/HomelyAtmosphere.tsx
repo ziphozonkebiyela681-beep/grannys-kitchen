@@ -10,6 +10,7 @@ import {
   ArrowRight,
   ShoppingBag,
   Award,
+  Instagram,
 } from 'lucide-react';
 
 interface HomelyAtmosphereProps {
@@ -34,7 +35,7 @@ export const HomelyAtmosphere: React.FC<HomelyAtmosphereProps> = ({
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-4 h-4 text-[#8b1d20]" />
-              <span>← Back to Page 1: Menu Summary</span>
+              <span>← Back to Home</span>
             </button>
           )}
 
@@ -43,7 +44,7 @@ export const HomelyAtmosphere: React.FC<HomelyAtmosphereProps> = ({
               onClick={onGoToFullMenu}
               className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
             >
-              <span>View Page 2: Complete Menu</span>
+              <span>View Full Menu</span>
               <ArrowRight className="w-4 h-4 text-[#e5a84b]" />
             </button>
           )}
@@ -335,6 +336,16 @@ export const HomelyAtmosphere: React.FC<HomelyAtmosphereProps> = ({
                       <span>Takeaway Bag</span>
                     </button>
                   )}
+
+                  <a
+                    href="https://www.instagram.com/granny_kitchen_fourways"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="py-2.5 px-4 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:brightness-110 text-white rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <Instagram className="w-4 h-4 text-white" />
+                    <span>Follow @granny_kitchen_fourways</span>
+                  </a>
                 </div>
               </div>
             )}

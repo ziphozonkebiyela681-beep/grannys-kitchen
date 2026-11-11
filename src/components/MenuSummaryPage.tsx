@@ -11,10 +11,12 @@ import {
   Heart,
   ChevronRight,
   Users,
+  Camera,
 } from 'lucide-react';
 import { CartItem } from './MenuSection';
 import { MenuItem, MENU_ITEMS } from '../data/menuData';
 import { useRestaurantStatus } from '../utils/operatingHours';
+import { AromatSeasoningBadge, AromatFlavourBar } from './AromatSeasoningBadge';
 
 interface MenuSummaryPageProps {
   onGoToFullMenu: (categoryId?: string) => void;
@@ -24,6 +26,7 @@ interface MenuSummaryPageProps {
   cartCount: number;
   onGoToService?: () => void;
   onGoToStory?: () => void;
+  onGoToTour?: () => void;
 }
 
 interface CategoryHighlight {
@@ -121,6 +124,7 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
   cartCount,
   onGoToService,
   onGoToStory,
+  onGoToTour,
 }) => {
   const status = useRestaurantStatus();
 
@@ -173,13 +177,23 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
             </p>
           </div>
 
-          {/* Quick CTA to Full Menu */}
+          {/* Quick CTA to Full Menu & Virtual Tour */}
           <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
+            {onGoToTour && (
+              <button
+                onClick={onGoToTour}
+                className="py-2.5 px-5 bg-gradient-to-r from-[#8b1d20] via-[#a82428] to-[#701518] hover:brightness-110 text-[#fffdfa] border-2 border-[#e5a84b]/70 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-extrabold shadow-md hover:shadow-xl transition-all flex items-center gap-2 cursor-pointer active:scale-95 group"
+              >
+                <Camera className="w-4 h-4 text-[#e5a84b]" />
+                <span>Take Virtual Restaurant Tour (Walk Inside)</span>
+              </button>
+            )}
+
             <button
               onClick={() => onGoToFullMenu()}
               className="py-2.5 px-5 bg-[#301c15] hover:bg-[#482c22] text-[#fffdfa] border-2 border-[#e5a84b]/60 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-xl transition-all flex items-center gap-2 cursor-pointer active:scale-95 group"
             >
-              <span>View Full Menu (All 15+ Dishes & Extras)</span>
+              <span>View Full Menu (All 15+ Dishes)</span>
               <ArrowRight className="w-4 h-4 text-[#e5a84b] group-hover:translate-x-1 transition-transform" />
             </button>
 
@@ -195,6 +209,9 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Authentic Aromat Seasoning Feature Bar */}
+      <AromatFlavourBar />
 
       {/* 2. Six Category Showcase Cards (1 Dish Representing Each Category) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-7">
@@ -234,21 +251,32 @@ export const MenuSummaryPage: React.FC<MenuSummaryPageProps> = ({
                   )}
                 </div>
 
-                {/* Full Authentic Food Image with Background */}
-                <div className="w-full h-52 sm:h-56 rounded-xl overflow-hidden my-2 relative bg-[#231510] shadow-md border border-[#decbb7]">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                      referrerPolicy="no-referrer"
+                {/* Full Authentic Food Image with Background & Aromat Shaker beside/behind */}
+                <div className="w-full h-52 sm:h-56 rounded-xl overflow-visible my-2 relative bg-[#231510] shadow-md border border-[#decbb7]">
+                  <div className="w-full h-full rounded-xl overflow-hidden relative">
+                    {item.image ? (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : (
+                      <div className="w-full h-full rounded-xl bg-[#e8dac7] flex items-center justify-center">
+                        <Utensils className="w-8 h-8 text-[#8b1d20]" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                  </div>
+
+                  {/* Aromat Seasoning Shaker Canister beside or behind the dish */}
+                  {item.aromatSeasoning && (
+                    <AromatSeasoningBadge
+                      aromat={item.aromatSeasoning}
+                      placement={item.aromatPlacement || 'beside'}
+                      size="md"
                     />
-                  ) : (
-                    <div className="w-full h-full rounded-xl bg-[#e8dac7] flex items-center justify-center">
-                      <Utensils className="w-8 h-8 text-[#8b1d20]" />
-                    </div>
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
                 </div>
 
                 {/* Dish Info Underneath Plate */}

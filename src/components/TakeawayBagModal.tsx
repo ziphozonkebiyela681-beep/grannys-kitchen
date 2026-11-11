@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CartItem } from './MenuSection';
-import { X, Trash2, ShoppingBag, Send, MapPin, Copy, Check, Clock } from 'lucide-react';
+import { X, Trash2, ShoppingBag, Send, MapPin, Copy, Check, Clock, Instagram } from 'lucide-react';
 import { useRestaurantStatus } from '../utils/operatingHours';
 
 interface TakeawayBagModalProps {
@@ -20,6 +20,7 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
   onRemoveItem,
   onClearCart,
 }) => {
+  const [diningOption, setDiningOption] = useState<'takeaway' | 'eat-in'>('takeaway');
   const [customerName, setCustomerName] = useState('');
   const [pickupNote, setPickupNote] = useState('');
   const [copied, setCopied] = useState(false);
@@ -31,8 +32,10 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
 
   // Formatted order text for WhatsApp or SMS
   const generateOrderText = () => {
-    let text = `*GRANNY'S KITCHEN TAKEAWAY ORDER*\n`;
+    let text = `*GRANNY'S KITCHEN ORDER*\n`;
     text += `📍 Fourways Mall BTC05 Taxi Terminal\n`;
+    text += `📱 Instagram: @granny_kitchen_fourways\n`;
+    text += `🍽️ Dining Choice: ${diningOption === 'eat-in' ? 'Sit Down & Eat In (Ceramic Dinnerware)' : 'Hot Takeaway (3-Compartment Box)'}\n`;
     if (customerName.trim()) {
       text += `👤 Customer: ${customerName}\n`;
     }
@@ -40,6 +43,9 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
 
     cart.forEach((c) => {
       text += `• ${c.quantity}x ${c.item.name} - R${c.totalPrice.toFixed(2)}\n`;
+      if (c.item.aromatSeasoning) {
+        text += `   Seasoning: ${c.item.aromatSeasoning.name}\n`;
+      }
       if (c.selectedStarch) {
         text += `   Starch: ${c.selectedStarch}\n`;
       }
@@ -93,12 +99,24 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
               </p>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-full bg-[#2d1b16] hover:bg-[#452b23] border border-[#e5a84b]/40 flex items-center justify-center text-white cursor-pointer shadow-sm transition-all"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <a
+              href="https://www.instagram.com/granny_kitchen_fourways"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2.5 py-1 bg-gradient-to-r from-[#833ab4] to-[#fd1d1d] hover:brightness-110 text-white rounded-lg text-[10px] font-condensed uppercase tracking-wider font-bold shadow-xs flex items-center gap-1 transition-all border border-white/20 active:scale-95"
+              title="Follow @granny_kitchen_fourways"
+            >
+              <Instagram className="w-3 h-3 text-white" />
+              <span className="hidden sm:inline">Instagram</span>
+            </a>
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-[#2d1b16] hover:bg-[#452b23] border border-[#e5a84b]/40 flex items-center justify-center text-white cursor-pointer shadow-sm transition-all"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Operating status notification banner */}
@@ -171,6 +189,12 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
                         </p>
                       )}
 
+                      {cartItem.item.aromatSeasoning && (
+                        <p className="text-[11px] text-[#8b1d20] font-semibold mt-0.5 flex items-center gap-1">
+                          <span>🧂 {cartItem.item.aromatSeasoning.name}</span>
+                        </p>
+                      )}
+
                       <div className="font-mono text-sm font-bold text-[#8b1d20] mt-1 sm:hidden">
                         R{cartItem.totalPrice.toFixed(2)}
                       </div>
@@ -216,8 +240,44 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
                 </div>
               ))}
 
+              {/* Dining Option Toggle: Eat In vs Take Away */}
+              <div className="bg-[#f9f2e7] border border-[#dfceb9] rounded-xl p-3.5 space-y-2 mt-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#520d0f] uppercase tracking-wider">
+                    How will you enjoy your food?
+                  </span>
+                  <span className="text-[10px] text-[#8b1d20] font-semibold">
+                    {diningOption === 'eat-in' ? 'Plated on Ceramic' : 'Packed in 3-Compartment Box'}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setDiningOption('takeaway')}
+                    className={`py-2 px-3 rounded-lg text-xs font-condensed uppercase tracking-wider font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 border ${
+                      diningOption === 'takeaway'
+                        ? 'bg-[#8b1d20] text-white border-[#5a0f12] shadow-xs'
+                        : 'bg-white hover:bg-[#faebd7] text-[#5c3e30] border-[#cbbaa4]'
+                    }`}
+                  >
+                    <span>🥡 Hot Takeaway</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDiningOption('eat-in')}
+                    className={`py-2 px-3 rounded-lg text-xs font-condensed uppercase tracking-wider font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 border ${
+                      diningOption === 'eat-in'
+                        ? 'bg-[#8b1d20] text-white border-[#5a0f12] shadow-xs'
+                        : 'bg-white hover:bg-[#faebd7] text-[#5c3e30] border-[#cbbaa4]'
+                    }`}
+                  >
+                    <span>🍽️ Sit Down & Eat In</span>
+                  </button>
+                </div>
+              </div>
+
               {/* Customer Name & Notes for order */}
-              <div className="bg-[#f9f2e7] border border-[#dfceb9] rounded-xl p-3.5 space-y-2.5 mt-4">
+              <div className="bg-[#f9f2e7] border border-[#dfceb9] rounded-xl p-3.5 space-y-2.5 mt-2">
                 <div className="text-xs font-bold text-[#520d0f] uppercase tracking-wider flex items-center gap-1.5">
                   <MapPin className="w-3.5 h-3.5 text-[#8b1d20]" />
                   <span>Pickup Details (BTC05 Taxi Terminal)</span>

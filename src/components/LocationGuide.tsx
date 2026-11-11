@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Navigation, Clock, CreditCard, ShieldCheck, Bus } from 'lucide-react';
+import { MapPin, Navigation, Clock, CreditCard, ShieldCheck, Bus, Instagram } from 'lucide-react';
 
 export const LocationGuide: React.FC = () => {
   return (
@@ -10,9 +10,20 @@ export const LocationGuide: React.FC = () => {
 
         {/* Header */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3d2018] uppercase tracking-widest bg-white/90 px-3 py-1 rounded-full border border-[#d5c3aa] mb-2 shadow-2xs">
-            <MapPin className="w-3.5 h-3.5 text-[#e5a84b]" />
-            <span>Finding Granny's Kitchen</span>
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-2">
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3d2018] uppercase tracking-widest bg-white/90 px-3 py-1 rounded-full border border-[#d5c3aa] shadow-2xs">
+              <MapPin className="w-3.5 h-3.5 text-[#e5a84b]" />
+              <span>Finding Granny's Kitchen</span>
+            </div>
+            <a
+              href="https://www.instagram.com/granny_kitchen_fourways"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-widest bg-gradient-to-r from-[#833ab4] to-[#fd1d1d] px-3 py-1 rounded-full shadow-2xs hover:brightness-110 active:scale-95 transition-all"
+            >
+              <Instagram className="w-3 h-3 text-white" />
+              <span>@granny_kitchen_fourways</span>
+            </a>
           </div>
           <h3 className="font-condensed text-2xl sm:text-3xl text-[#361a15] font-bold uppercase tracking-wide">
             Fourways Mall • BTC05 Taxi Terminal

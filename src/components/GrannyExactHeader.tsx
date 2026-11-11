@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Clock, Phone, Sparkles } from 'lucide-react';
+import { MapPin, Clock, Phone, Sparkles, Instagram } from 'lucide-react';
 import { useRestaurantStatus } from '../utils/operatingHours';
 
 interface GrannyExactHeaderProps {
@@ -54,8 +54,20 @@ export const GrannyExactHeader: React.FC<GrannyExactHeaderProps> = ({ onOrderCli
               </div>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="hidden md:flex flex-col text-right text-[11px] text-[#edd5b9] bg-black/40 px-3 py-1 rounded-lg border border-white/10">
+            <div className="flex items-center gap-2 flex-wrap justify-center">
+              <a
+                href="https://www.instagram.com/granny_kitchen_fourways"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Follow Granny's Kitchen on Instagram @granny_kitchen_fourways"
+                className="px-3 py-2 bg-gradient-to-r from-[#833ab4]/80 via-[#fd1d1d]/80 to-[#fcb045]/80 hover:brightness-110 text-white rounded-xl text-xs font-condensed uppercase tracking-wider font-bold shadow-md flex items-center gap-1.5 transition-all border border-white/20 active:scale-95"
+              >
+                <Instagram className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">@granny_kitchen_fourways</span>
+                <span className="sm:hidden">Instagram</span>
+              </a>
+
+              <div className="hidden lg:flex flex-col text-right text-[11px] text-[#edd5b9] bg-black/40 px-3 py-1 rounded-lg border border-white/10">
                 <span className="flex items-center gap-1 font-semibold text-[#f5eedf]">
                   <Clock className="w-3 h-3 text-[#e5a84b]" />
                   <span>06:00 – 19:00 Daily</span>
