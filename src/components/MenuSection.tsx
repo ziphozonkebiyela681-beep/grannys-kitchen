@@ -155,25 +155,6 @@ export const MenuSection: React.FC<MenuSectionProps> = ({
         </div>
       )}
 
-      {/* Page Navigation Breadcrumb: Back to Page 1 (Summary) */}
-      {onBackToSummary && (
-        <div className="mb-4 flex items-center justify-between gap-3">
-          <button
-            onClick={onBackToSummary}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-          >
-            <ArrowLeft className="w-4 h-4 text-[#8b1d20]" />
-            <span>← Back to Home</span>
-          </button>
-          <div className="text-right hidden sm:block">
-            <span className="text-xs font-bold text-[#8b1d20] uppercase tracking-wider font-condensed">
-              Full Menu
-            </span>
-            <p className="text-[11px] text-[#735041]">All 15+ dishes, starches & toppings</p>
-          </div>
-        </div>
-      )}
-
       {/* Menu Header Board (Celebrating the Scottish Tartan Pattern & Logo Motif) */}
       <div className="relative rounded-t-2xl overflow-hidden border-2 border-b-0 border-[#d5c3aa] shadow-md bg-scottish-tartan p-1.5 sm:p-2">
         <div className="bg-[#2a1711] text-[#fcf7ee] rounded-xl p-4 sm:p-5 text-center border border-[#e5a84b]/40 shadow-inner relative">

@@ -59,11 +59,11 @@ export const GrannyExactHeader: React.FC<GrannyExactHeaderProps> = ({ onOrderCli
                 href="https://www.instagram.com/granny_kitchen_fourways"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Follow Granny's Kitchen on Instagram @granny_kitchen_fourways"
+                title="Follow Granny's Kitchen on Instagram granny's_kitchen_fourways"
                 className="px-3 py-2 bg-gradient-to-r from-[#833ab4]/80 via-[#fd1d1d]/80 to-[#fcb045]/80 hover:brightness-110 text-white rounded-xl text-xs font-condensed uppercase tracking-wider font-bold shadow-md flex items-center gap-1.5 transition-all border border-white/20 active:scale-95"
               >
                 <Instagram className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">@granny_kitchen_fourways</span>
+                <span className="hidden sm:inline">granny's_kitchen_fourways</span>
                 <span className="sm:hidden">Instagram</span>
               </a>
 
@@ -84,7 +84,7 @@ export const GrannyExactHeader: React.FC<GrannyExactHeaderProps> = ({ onOrderCli
                   }`}
                 >
                   <Phone className="w-3.5 h-3.5 text-[#e5a84b]" />
-                  <span>{status.isOpen ? 'Takeaway Order' : 'Pre-Order / Menu'}</span>
+                  <span>{status.isOpen ? 'Order • 072 314 7152' : 'Desk • 072 314 7152'}</span>
                 </button>
               )}
             </div>

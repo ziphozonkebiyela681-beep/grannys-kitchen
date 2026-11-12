@@ -273,16 +273,6 @@ export const RestaurantTourSection: React.FC<RestaurantTourSectionProps> = ({
                 </>
               )}
             </button>
-
-            {onGoToMenu && (
-              <button
-                onClick={onGoToMenu}
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-              >
-                <span>View Full Menu</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#e5a84b]" />
-              </button>
-            )}
           </div>
         </div>
       )}
@@ -649,13 +639,15 @@ export const RestaurantTourSection: React.FC<RestaurantTourSectionProps> = ({
               "Granny's Kitchen is more than a restaurant. It is a home away from home, built on family, tradition and real home-cooked food."
             </p>
           </div>
-          <button
-            onClick={onGoToMenu}
-            className="py-2.5 px-5 rounded-xl bg-[#8b1d20] hover:bg-[#a12327] border border-[#e5a84b]/60 text-white font-condensed uppercase tracking-wider text-xs font-extrabold shadow-md active:scale-95 transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
-          >
-            <Utensils className="w-3.5 h-3.5 text-[#e5a84b]" />
-            <span>Taste the Food</span>
-          </button>
+          {onOpenOrder && (
+            <button
+              onClick={onOpenOrder}
+              className="py-2.5 px-5 rounded-xl bg-[#8b1d20] hover:bg-[#a12327] border border-[#e5a84b]/60 text-white font-condensed uppercase tracking-wider text-xs font-extrabold shadow-md active:scale-95 transition-all shrink-0 cursor-pointer flex items-center gap-1.5"
+            >
+              <ShoppingBag className="w-3.5 h-3.5 text-[#e5a84b]" />
+              <span>Order Desk: 072 314 7152</span>
+            </button>
+          )}
         </div>
       </div>
     </section>

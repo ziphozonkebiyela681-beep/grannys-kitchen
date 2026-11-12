@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapPin, Navigation, Clock, CreditCard, ShieldCheck, Bus, Instagram } from 'lucide-react';
+import { MapPin, Clock, Bus, Instagram, Phone } from 'lucide-react';
 
 export const LocationGuide: React.FC = () => {
   return (
@@ -19,10 +19,10 @@ export const LocationGuide: React.FC = () => {
               href="https://www.instagram.com/granny_kitchen_fourways"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-white uppercase tracking-widest bg-gradient-to-r from-[#833ab4] to-[#fd1d1d] px-3 py-1 rounded-full shadow-2xs hover:brightness-110 active:scale-95 transition-all"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-white bg-gradient-to-r from-[#833ab4] to-[#fd1d1d] px-3 py-1 rounded-full shadow-2xs hover:brightness-110 active:scale-95 transition-all"
             >
               <Instagram className="w-3 h-3 text-white" />
-              <span>@granny_kitchen_fourways</span>
+              <span>granny's_kitchen_fourways</span>
             </a>
           </div>
           <h3 className="font-condensed text-2xl sm:text-3xl text-[#361a15] font-bold uppercase tracking-wide">
@@ -63,16 +63,20 @@ export const LocationGuide: React.FC = () => {
             </p>
           </div>
 
-          {/* Card 3: Easy Payment */}
+          {/* Card 3: Order Desk & Payment */}
           <div className="bg-white border border-[#e2d5c3] p-4 rounded-xl shadow-xs">
             <div className="w-9 h-9 rounded-lg bg-[#8b1d20]/15 text-[#8b1d20] flex items-center justify-center mb-3">
-              <CreditCard className="w-5 h-5" />
+              <Phone className="w-5 h-5" />
             </div>
             <h4 className="font-bold text-sm text-[#3d1819] uppercase tracking-wide mb-1">
-              Payment & Takeaway
+              Order Desk: 072 314 7152
             </h4>
             <p className="text-xs text-[#6e5143] leading-relaxed">
-              Cash, Card Speedpoint & SnapScan accepted. Sturdy leak-proof packaging keeps your stew and gravy piping hot.
+              All orders are taken via our desk number{' '}
+              <a href="tel:0723147152" className="font-bold text-[#8b1d20] hover:underline">
+                0723147152
+              </a>{' '}
+              (Call or WhatsApp). Cash, Card Speedpoint & SnapScan accepted.
             </p>
           </div>
         </div>

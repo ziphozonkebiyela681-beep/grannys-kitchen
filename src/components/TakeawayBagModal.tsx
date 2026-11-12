@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { CartItem } from './MenuSection';
-import { X, Trash2, ShoppingBag, Send, MapPin, Copy, Check, Clock, Instagram } from 'lucide-react';
+import { X, Trash2, ShoppingBag, Send, MapPin, Copy, Check, Clock, Instagram, Phone } from 'lucide-react';
 import { useRestaurantStatus } from '../utils/operatingHours';
 
 interface TakeawayBagModalProps {
@@ -11,6 +11,10 @@ interface TakeawayBagModalProps {
   onRemoveItem: (cartId: string) => void;
   onClearCart: () => void;
 }
+
+const DESK_PHONE_DISPLAY = '072 314 7152';
+const DESK_PHONE_RAW = '0723147152';
+const DESK_WHATSAPP_NUMBER = '27723147152';
 
 export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
   isOpen,
@@ -30,11 +34,12 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
 
   const totalAmount = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
-  // Formatted order text for WhatsApp or SMS
+  // Formatted order text for WhatsApp or SMS to Desk 0723147152
   const generateOrderText = () => {
     let text = `*GRANNY'S KITCHEN ORDER*\n`;
+    text += `📞 Desk Number: ${DESK_PHONE_RAW}\n`;
     text += `📍 Fourways Mall BTC05 Taxi Terminal\n`;
-    text += `📱 Instagram: @granny_kitchen_fourways\n`;
+    text += "📱 Instagram: granny's_kitchen_fourways\n";
     text += `🍽️ Dining Choice: ${diningOption === 'eat-in' ? 'Sit Down & Eat In (Ceramic Dinnerware)' : 'Hot Takeaway (3-Compartment Box)'}\n`;
     if (customerName.trim()) {
       text += `👤 Customer: ${customerName}\n`;
@@ -69,7 +74,7 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
   const handleSendWhatsApp = () => {
     const text = encodeURIComponent(generateOrderText());
     const link = document.createElement('a');
-    link.href = `https://wa.me/?text=${text}`;
+    link.href = `https://wa.me/${DESK_WHATSAPP_NUMBER}?text=${text}`;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
     document.body.appendChild(link);
@@ -92,10 +97,10 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
             <ShoppingBag className="w-5 h-5 text-[#e5a84b]" />
             <div>
               <h3 className="font-condensed text-base sm:text-lg uppercase tracking-wider font-extrabold text-[#fffcf7]">
-                Your Takeaway Bag
+                Your Order Bag
               </h3>
               <p className="text-[10px] text-[#e8c89b] font-body">
-                Granny's Kitchen • Fourways Mall BTC05
+                Order Desk: {DESK_PHONE_DISPLAY} • BTC05
               </p>
             </div>
           </div>
@@ -105,10 +110,10 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               className="px-2.5 py-1 bg-gradient-to-r from-[#833ab4] to-[#fd1d1d] hover:brightness-110 text-white rounded-lg text-[10px] font-condensed uppercase tracking-wider font-bold shadow-xs flex items-center gap-1 transition-all border border-white/20 active:scale-95"
-              title="Follow @granny_kitchen_fourways"
+              title="Follow granny's_kitchen_fourways"
             >
               <Instagram className="w-3 h-3 text-white" />
-              <span className="hidden sm:inline">Instagram</span>
+              <span className="hidden sm:inline">granny's_kitchen_fourways</span>
             </a>
             <button
               onClick={onClose}
@@ -117,6 +122,20 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
               <X className="w-4 h-4" />
             </button>
           </div>
+        </div>
+
+        {/* Desk Number Order Strip */}
+        <div className="bg-[#f4ebe0] px-4 py-2 border-b border-[#decbb5] flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div className="flex items-center gap-1.5 font-bold text-[#4a1819]">
+            <Phone className="w-3.5 h-3.5 text-[#8b1d20]" />
+            <span>All orders go directly to Kitchen Desk: {DESK_PHONE_RAW}</span>
+          </div>
+          <a
+            href={`tel:${DESK_PHONE_RAW}`}
+            className="text-[11px] font-bold bg-[#8b1d20] hover:bg-[#6e1517] text-white px-2.5 py-1 rounded-lg shadow-2xs transition-colors"
+          >
+            Call {DESK_PHONE_DISPLAY}
+          </a>
         </div>
 
         {/* Operating status notification banner */}
@@ -137,12 +156,32 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
         {/* Scrollable Items List */}
         <div className="p-4 sm:p-6 overflow-y-auto grow space-y-4">
           {cart.length === 0 ? (
-            <div className="text-center py-12 text-[#6e5143]">
-              <ShoppingBag className="w-12 h-12 mx-auto text-[#cbbaa8] mb-3" />
-              <p className="font-editorial text-lg font-bold">Your bag is empty</p>
-              <p className="text-xs text-[#8c6d5d] mt-1">
-                Explore the menu to add delicious beef stew, chicken dust, kotas, and magwinya!
-              </p>
+            <div className="text-center py-10 text-[#6e5143] space-y-4">
+              <div>
+                <ShoppingBag className="w-12 h-12 mx-auto text-[#cbbaa8] mb-3" />
+                <p className="font-editorial text-lg font-bold">Your order bag is empty</p>
+                <p className="text-xs text-[#8c6d5d] mt-1">
+                  Add a dish from the menu, or order directly through our kitchen desk number below:
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                <a
+                  href={`https://wa.me/${DESK_WHATSAPP_NUMBER}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white text-xs font-condensed uppercase tracking-wider font-bold shadow-sm flex items-center gap-1.5"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>WhatsApp Desk ({DESK_PHONE_RAW})</span>
+                </a>
+                <a
+                  href={`tel:${DESK_PHONE_RAW}`}
+                  className="py-2.5 px-4 rounded-xl bg-[#2d1b16] text-[#fad194] border border-[#e5a84b]/50 text-xs font-condensed uppercase tracking-wider font-bold shadow-sm flex items-center gap-1.5"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#e5a84b]" />
+                  <span>Call Desk ({DESK_PHONE_RAW})</span>
+                </a>
+              </div>
             </div>
           ) : (
             <div className="space-y-3">
@@ -318,20 +357,28 @@ export const TakeawayBagModal: React.FC<TakeawayBagModalProps> = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
               <button
                 onClick={handleSendWhatsApp}
-                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-condensed tracking-wider text-base uppercase font-bold shadow-md hover:brightness-105 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white font-condensed tracking-wider text-sm sm:text-base uppercase font-bold shadow-md hover:brightness-105 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Send className="w-4 h-4" />
-                <span>Send WhatsApp Order</span>
+                <span>WhatsApp Desk ({DESK_PHONE_RAW})</span>
               </button>
 
-              <button
-                onClick={handleCopyOrder}
-                className="w-full py-3 px-4 rounded-xl bg-[#301c15] hover:bg-[#482c22] text-[#fffdfa] border border-[#e5a84b]/40 font-condensed tracking-wider text-base uppercase font-bold shadow-md active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              <a
+                href={`tel:${DESK_PHONE_RAW}`}
+                className="w-full py-3 px-4 rounded-xl bg-[#8b1d20] hover:bg-[#6e1517] text-[#fffdfa] border border-[#e5a84b]/50 font-condensed tracking-wider text-sm sm:text-base uppercase font-bold shadow-md active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
-                {copied ? <Check className="w-4 h-4 text-[#e5a84b]" /> : <Copy className="w-4 h-4 text-[#e5a84b]" />}
-                <span>{copied ? 'Order Copied!' : 'Copy Order Text'}</span>
-              </button>
+                <Phone className="w-4 h-4 text-[#e5a84b]" />
+                <span>Call Desk ({DESK_PHONE_DISPLAY})</span>
+              </a>
             </div>
+
+            <button
+              onClick={handleCopyOrder}
+              className="w-full py-2.5 px-4 rounded-xl bg-[#301c15] hover:bg-[#482c22] text-[#fffdfa] border border-[#e5a84b]/40 font-condensed tracking-wider text-xs sm:text-sm uppercase font-bold shadow-xs active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {copied ? <Check className="w-3.5 h-3.5 text-[#e5a84b]" /> : <Copy className="w-3.5 h-3.5 text-[#e5a84b]" />}
+              <span>{copied ? 'Order Copied!' : 'Copy Order Text'}</span>
+            </button>
 
             <div className="text-center">
               <button

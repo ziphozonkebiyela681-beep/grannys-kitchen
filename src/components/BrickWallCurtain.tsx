@@ -36,7 +36,7 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
 
       {/* Floating Curtain Control to easily replay or close the brick entrance */}
       {isRevealed && (
-        <div className="fixed bottom-20 right-5 xl:bottom-5 xl:right-64 z-30 flex items-center gap-2 bg-[#2d1b14]/90 backdrop-blur-md text-[#f7eedf] border border-[#e5a84b]/40 px-3 py-1.5 rounded-full shadow-xl hover:bg-[#3d241c] transition-all text-xs font-semibold cursor-pointer select-none">
+        <div className="fixed top-4 right-4 z-30 flex items-center gap-2 bg-[#2d1b14]/90 backdrop-blur-md text-[#f7eedf] border border-[#e5a84b]/40 px-3 py-1.5 rounded-full shadow-xl hover:bg-[#3d241c] transition-all text-xs font-semibold cursor-pointer select-none">
           <button
             onClick={handleToggle}
             className="flex items-center gap-1.5 focus:outline-none cursor-pointer"
@@ -121,10 +121,10 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.5 }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center p-3 sm:p-6 pointer-events-auto bg-black/60 backdrop-blur-[2px] select-none overflow-y-auto overflow-x-hidden"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center p-2.5 sm:p-6 pointer-events-auto bg-black/60 backdrop-blur-[2px] select-none overflow-y-auto overflow-x-hidden"
           >
-            {/* Center Area with Red Bistro Chairs flanking on desktop & below on vertical phones */}
-            <div className="relative max-w-xl w-full flex flex-col items-center justify-center my-auto py-2">
+            {/* Center Area with Red Bistro Chairs flanking on desktop & small table setup directly below on vertical phones */}
+            <div className="relative max-w-xl w-full flex flex-col items-center justify-center my-auto py-1 sm:py-2">
               {/* Left Red Bistro Chair (Desktop & Tablet flanking) */}
               <div className="hidden sm:block absolute -left-8 md:-left-16 lg:-left-24 bottom-2 md:bottom-3 w-20 md:w-28 lg:w-36 pointer-events-none select-none z-20">
                 <img
@@ -134,45 +134,45 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
                 />
               </div>
 
-              {/* Central Welcome Card (The Description Cube) */}
-              <div className="max-w-lg w-full relative z-10 p-1.5 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50 max-h-[85vh] sm:max-h-[90vh] flex flex-col">
-                <div className="bg-[#fffdf9] rounded-xl p-4 sm:p-7 text-center border border-[#e5a84b]/40 overflow-y-auto">
+              {/* Central Welcome Card (The Description Square) */}
+              <div className="max-w-lg w-full relative z-10 p-1 sm:p-2 bg-scottish-tartan rounded-2xl shadow-2xl border-2 border-[#8b1d20]/50 flex flex-col">
+                <div className="bg-[#fffdf9] rounded-xl p-3 sm:p-7 text-center border border-[#e5a84b]/40">
                   {/* The EXACT Granny's Kitchen Logo Graphic */}
-                  <div className="w-full flex items-center justify-center mb-4 px-2">
+                  <div className="w-full flex items-center justify-center mb-2 sm:mb-4 px-2">
                     <img
                       src="/assets/logos/grannys_kitchen_logo.png"
                       alt="Granny's Kitchen"
-                      className="w-full max-w-[280px] sm:max-w-[340px] h-auto object-contain drop-shadow-[0_4px_12px_rgba(40,15,10,0.2)] select-none pointer-events-none"
+                      className="w-full max-w-[180px] sm:max-w-[340px] h-auto object-contain drop-shadow-[0_4px_12px_rgba(40,15,10,0.2)] select-none pointer-events-none"
                       referrerPolicy="no-referrer"
                     />
                   </div>
 
                   {/* Status Badge: Open or Closed based on operating hours (06:00 - 19:00 SAST) */}
-                  <div className="mb-3">
+                  <div className="mb-1.5 sm:mb-3">
                     {status.isOpen ? (
-                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-emerald-800 text-white rounded-full text-xs font-bold uppercase tracking-wider shadow-sm border border-emerald-600/50">
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 bg-emerald-800 text-white rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm border border-emerald-600/50">
+                        <span className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-400 animate-ping" />
                         <span>{status.statusText}</span>
                       </div>
                     ) : (
-                      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-[#421618] text-[#ffe8e8] rounded-full text-xs font-bold uppercase tracking-wider shadow-sm border border-[#e5a84b]/40">
-                        <Clock className="w-3.5 h-3.5 text-[#fbbf24]" />
+                      <div className="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 bg-[#421618] text-[#ffe8e8] rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider shadow-sm border border-[#e5a84b]/40">
+                        <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#fbbf24]" />
                         <span>{status.statusText} • {status.opensAtText}</span>
                       </div>
                     )}
                   </div>
 
-                  <p className="flex items-center justify-center gap-1.5 text-xs font-bold text-[#633a28] uppercase tracking-wider mb-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[#e5a84b]" />
+                  <p className="flex items-center justify-center gap-1 text-[11px] sm:text-xs font-bold text-[#633a28] uppercase tracking-wider mb-1 sm:mb-1.5">
+                    <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#e5a84b]" />
                     <span>Fourways Mall • BTC05 Taxi Terminal</span>
                   </p>
 
                   {/* Operating Hours Note */}
-                  <p className="text-[11px] sm:text-xs text-[#785341] font-semibold mb-2.5">
+                  <p className="text-[10px] sm:text-xs text-[#785341] font-semibold mb-1.5 sm:mb-2.5">
                     Hours: {status.hoursText} <span className="opacity-70">({status.currentTimeStr})</span>
                   </p>
 
-                  <p className="text-xs sm:text-sm text-[#5c4a3b] mb-4 font-body leading-relaxed px-1">
+                  <p className="text-[11px] sm:text-sm text-[#5c4a3b] mb-3 sm:mb-4 font-body leading-snug sm:leading-relaxed px-1">
                     {status.isOpen
                       ? "Welcome to Granny's Kitchen! Step inside to explore our home-cooked meals, flame-grilled chicken dust, rich stews, supreme kotas, fresh vetkoek, and crisp salads."
                       : "The kitchen is currently closed for the night. You can step inside to browse our full menu, dishes, and prices ahead of opening!"}
@@ -181,9 +181,9 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
                   {/* The "Step Inside" Button that explicitly opens the brick walls */}
                   <button
                     onClick={handleOpenDoors}
-                    className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-[#7a2225] via-[#8b1d20] to-[#601416] hover:brightness-110 border-2 border-[#e5a84b]/60 text-[#fffdfa] font-condensed tracking-widest text-base sm:text-lg uppercase shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2.5 group cursor-pointer font-extrabold ring-2 ring-[#e5a84b]/30"
+                    className="w-full py-2.5 sm:py-3.5 px-4 sm:px-6 rounded-xl bg-gradient-to-r from-[#7a2225] via-[#8b1d20] to-[#601416] hover:brightness-110 border-2 border-[#e5a84b]/60 text-[#fffdfa] font-condensed tracking-widest text-sm sm:text-lg uppercase shadow-xl active:scale-[0.98] transition-all flex items-center justify-center gap-2 group cursor-pointer font-extrabold ring-2 ring-[#e5a84b]/30"
                   >
-                    <Sparkles className="w-5 h-5 text-[#e5a84b] group-hover:rotate-12 transition-transform" />
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-[#e5a84b] group-hover:rotate-12 transition-transform" />
                     <span>{status.isOpen ? "Step Inside • View Menu & Order" : "Step Inside • Browse Menu"}</span>
                   </button>
                 </div>
@@ -198,19 +198,17 @@ export const BrickWallCurtain: React.FC<BrickWallCurtainProps> = ({
                 />
               </div>
 
-              {/* Vertical Phone Entrance Setup: Table and Red Chairs setup positioned directly BELOW the description cube */}
-              <div className="block sm:hidden w-full max-w-[280px] mx-auto mt-2.5 pt-1 text-center pointer-events-none select-none z-20 animate-fade-in">
-                <div className="relative">
-                  <img
-                    src="/assets/decorations/bistro_table_and_chairs.png"
-                    alt="Granny's Kitchen Bistro Dining Table & Chairs"
-                    className="w-full h-auto drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)]"
-                  />
-                </div>
-                <div className="mt-1 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/60 border border-[#e5a84b]/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#e5a84b] animate-pulse" />
-                  <span className="text-[10px] text-[#f7eedf] font-condensed uppercase tracking-wider font-bold">
-                    Eat In or Take Away • A warm table awaits you
+              {/* Vertical Phone Entrance Setup: Small & clearly visible just under the square */}
+              <div className="block sm:hidden w-full max-w-[140px] mx-auto mt-2 text-center pointer-events-none select-none z-20 animate-fade-in">
+                <img
+                  src="/assets/decorations/bistro_table_and_chairs.png"
+                  alt="Granny's Kitchen Bistro Dining Table & Chairs"
+                  className="w-full h-auto object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.9)]"
+                />
+                <div className="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/70 border border-[#e5a84b]/40">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#e5a84b] animate-pulse shrink-0" />
+                  <span className="text-[9px] text-[#f7eedf] font-condensed uppercase tracking-wider font-bold whitespace-nowrap">
+                    A warm table awaits
                   </span>
                 </div>
               </div>

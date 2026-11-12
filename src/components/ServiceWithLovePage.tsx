@@ -17,16 +17,13 @@ import {
 } from 'lucide-react';
 
 interface ServiceWithLovePageProps {
-  onGoToSummary: () => void;
-  onGoToFullMenu: () => void;
-  onGoToStory: () => void;
-  onOpenOrder: () => void;
+  onGoToSummary?: () => void;
+  onGoToFullMenu?: () => void;
+  onGoToStory?: () => void;
+  onOpenOrder?: () => void;
 }
 
 export const ServiceWithLovePage: React.FC<ServiceWithLovePageProps> = ({
-  onGoToSummary,
-  onGoToFullMenu,
-  onGoToStory,
   onOpenOrder,
 }) => {
   const servicePrinciples = [
@@ -66,33 +63,6 @@ export const ServiceWithLovePage: React.FC<ServiceWithLovePageProps> = ({
 
   return (
     <section id="service-with-love" className="w-full max-w-5xl mx-auto px-2 sm:px-4 py-6 scroll-mt-6 select-none">
-      {/* Top Breadcrumb Navigation */}
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2.5">
-        <button
-          onClick={onGoToSummary}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-        >
-          <ArrowLeft className="w-4 h-4 text-[#8b1d20]" />
-          <span>← Back to Home</span>
-        </button>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={onGoToStory}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-          >
-            <Heart className="w-3.5 h-3.5 text-[#8b1d20]" />
-            <span>Our Story</span>
-          </button>
-          <button
-            onClick={onGoToFullMenu}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-          >
-            <span>View Full Menu</span>
-            <ArrowRight className="w-4 h-4 text-[#e5a84b]" />
-          </button>
-        </div>
-      </div>
 
       {/* Main Container */}
       <div className="bg-[#fffdf9] border-2 border-[#8b1d20]/40 rounded-3xl overflow-hidden shadow-xl relative">
@@ -394,7 +364,7 @@ export const ServiceWithLovePage: React.FC<ServiceWithLovePageProps> = ({
                   Follow Our Daily Kitchen Stories
                 </span>
                 <h4 className="font-bold text-base sm:text-lg text-[#321612]">
-                  Instagram: @granny_kitchen_fourways
+                  Instagram: granny's_kitchen_fourways
                 </h4>
                 <p className="text-xs text-[#735443]">
                   Watch our daily pots simmering, see menu specials, and tag us when enjoying your meal!
@@ -409,28 +379,22 @@ export const ServiceWithLovePage: React.FC<ServiceWithLovePageProps> = ({
               className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:brightness-110 text-white font-condensed tracking-wider text-xs sm:text-sm uppercase font-bold shadow-md active:scale-95 transition-all flex items-center gap-2 shrink-0 cursor-pointer"
             >
               <Instagram className="w-4 h-4 text-white" />
-              <span>Visit @granny_kitchen_fourways</span>
+              <span>Visit granny's_kitchen_fourways</span>
             </a>
           </div>
 
-          {/* Bottom Call to Actions */}
+          {/* Bottom Order Call to Action */}
           <div className="text-center pt-2">
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <button
-                onClick={onGoToFullMenu}
-                className="py-3 px-6 rounded-xl bg-gradient-to-r from-[#7a2225] via-[#8b1d20] to-[#601416] hover:brightness-110 border-2 border-[#e5a84b]/60 text-[#fffdfa] font-condensed tracking-widest text-sm sm:text-base uppercase shadow-lg active:scale-98 transition-all flex items-center gap-2 cursor-pointer font-bold"
-              >
-                <Utensils className="w-4 h-4 text-[#e5a84b]" />
-                <span>Explore The Menu & Order</span>
-              </button>
-
-              <button
-                onClick={onOpenOrder}
-                className="py-3 px-6 rounded-xl bg-[#2d1b16] hover:bg-[#40261e] border-2 border-[#cbbaa4] text-[#fffdfa] font-condensed tracking-widest text-sm sm:text-base uppercase shadow-md active:scale-98 transition-all flex items-center gap-2 cursor-pointer font-bold"
-              >
-                <ShoppingBag className="w-4 h-4 text-[#e5a84b]" />
-                <span>Open Takeaway Bag</span>
-              </button>
+              {onOpenOrder && (
+                <button
+                  onClick={onOpenOrder}
+                  className="py-3 px-6 rounded-xl bg-[#2d1b16] hover:bg-[#40261e] border-2 border-[#e5a84b]/60 text-[#fffdfa] font-condensed tracking-widest text-sm sm:text-base uppercase shadow-md active:scale-98 transition-all flex items-center gap-2 cursor-pointer font-bold"
+                >
+                  <ShoppingBag className="w-4 h-4 text-[#e5a84b]" />
+                  <span>Open Order Bag (072 314 7152)</span>
+                </button>
+              )}
             </div>
           </div>
         </div>

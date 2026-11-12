@@ -26,30 +26,6 @@ export const HomelyAtmosphere: React.FC<HomelyAtmosphereProps> = ({
 }) => {
   return (
     <section id="our-story" className="w-full max-w-5xl mx-auto px-4 py-6 scroll-mt-6 select-none">
-      {/* Top Breadcrumb Navigation Bar for the Story Page */}
-      {(onGoToSummary || onGoToFullMenu) && (
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-          {onGoToSummary && (
-            <button
-              onClick={onGoToSummary}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#fffdf9] hover:bg-[#f7eedf] text-[#361a15] border border-[#cbbaa4] text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-            >
-              <ArrowLeft className="w-4 h-4 text-[#8b1d20]" />
-              <span>← Back to Home</span>
-            </button>
-          )}
-
-          {onGoToFullMenu && (
-            <button
-              onClick={onGoToFullMenu}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#2d1b16] hover:bg-[#422820] text-[#fffdfa] border border-[#e5a84b]/50 text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs hover:shadow-md transition-all cursor-pointer active:scale-95"
-            >
-              <span>View Full Menu</span>
-              <ArrowRight className="w-4 h-4 text-[#e5a84b]" />
-            </button>
-          )}
-        </div>
-      )}
 
       {/* Main Story Container */}
       <div className="bg-[#fffdf9] border-2 border-[#8b1d20]/40 rounded-3xl overflow-hidden shadow-xl relative">
@@ -300,55 +276,33 @@ export const HomelyAtmosphere: React.FC<HomelyAtmosphereProps> = ({
               </div>
             </div>
 
-            {/* Quick Link Actions from Story to Menu */}
-            {(onGoToSummary || onGoToFullMenu) && (
-              <div className="pt-6 border-t border-[#ebdccb] text-center space-y-3">
-                <p className="text-xs uppercase font-condensed tracking-wider font-bold text-[#735041]">
-                  Taste Mam Nomsa's Home Cooking Today
-                </p>
-                <div className="flex flex-wrap items-center justify-center gap-3">
-                  {onGoToSummary && (
-                    <button
-                      onClick={onGoToSummary}
-                      className="py-2.5 px-5 bg-[#301c15] hover:bg-[#482c22] text-[#fffdfa] border border-[#e5a84b]/50 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-xl transition-all cursor-pointer active:scale-95 flex items-center gap-2"
-                    >
-                      <Sparkles className="w-4 h-4 text-[#e5a84b]" />
-                      <span>Explore Page 1: Menu Summary</span>
-                    </button>
-                  )}
-
-                  {onGoToFullMenu && (
-                    <button
-                      onClick={onGoToFullMenu}
-                      className="py-2.5 px-5 bg-[#7a2225] hover:bg-[#91282c] text-[#fffdfa] border border-[#e5a84b]/50 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-xl transition-all cursor-pointer active:scale-95 flex items-center gap-2"
-                    >
-                      <Utensils className="w-4 h-4 text-[#e5a84b]" />
-                      <span>View Page 2: Complete Menu</span>
-                    </button>
-                  )}
-
-                  {onOpenOrder && (
-                    <button
-                      onClick={onOpenOrder}
-                      className="py-2.5 px-4 bg-[#f2e6d6] hover:bg-[#e4d3bc] text-[#3e1416] border border-[#c5ab8f] rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-xs transition-all cursor-pointer active:scale-95 flex items-center gap-1.5"
-                    >
-                      <ShoppingBag className="w-4 h-4 text-[#8b1d20]" />
-                      <span>Takeaway Bag</span>
-                    </button>
-                  )}
-
-                  <a
-                    href="https://www.instagram.com/granny_kitchen_fourways"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="py-2.5 px-4 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:brightness-110 text-white rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+            {/* Quick Actions: Order Bag & Instagram */}
+            <div className="pt-6 border-t border-[#ebdccb] text-center space-y-3">
+              <p className="text-xs uppercase font-condensed tracking-wider font-bold text-[#735041]">
+                Taste Mam Nomsa's Home Cooking Today • Desk: 072 314 7152
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-3">
+                {onOpenOrder && (
+                  <button
+                    onClick={onOpenOrder}
+                    className="py-2.5 px-5 bg-[#7a2225] hover:bg-[#91282c] text-[#fffdfa] border border-[#e5a84b]/50 rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md hover:shadow-xl transition-all cursor-pointer active:scale-95 flex items-center gap-2"
                   >
-                    <Instagram className="w-4 h-4 text-white" />
-                    <span>Follow @granny_kitchen_fourways</span>
-                  </a>
-                </div>
+                    <ShoppingBag className="w-4 h-4 text-[#e5a84b]" />
+                    <span>Order Bag (072 314 7152)</span>
+                  </button>
+                )}
+
+                <a
+                  href="https://www.instagram.com/granny_kitchen_fourways"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-2.5 px-4 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] hover:brightness-110 text-white rounded-xl text-xs sm:text-sm font-condensed uppercase tracking-wider font-bold shadow-md transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Instagram className="w-4 h-4 text-white" />
+                  <span>Follow granny's_kitchen_fourways</span>
+                </a>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ import { BrickWallCurtain } from './components/BrickWallCurtain';
 import { MenuSection, CartItem } from './components/MenuSection';
 import { HomePage } from './components/HomePage';
 import { CornerNavigation, AppPage } from './components/CornerNavigation';
-import { MenuItem } from './data/menuData';
 import { TakeawayBagModal } from './components/TakeawayBagModal';
 import { LocationGuide } from './components/LocationGuide';
 import { HomelyAtmosphere } from './components/HomelyAtmosphere';
@@ -12,27 +11,16 @@ import { ServiceWithLovePage } from './components/ServiceWithLovePage';
 import { RestaurantTourSection } from './components/RestaurantTourSection';
 import {
   ShoppingBag,
-  MapPin,
-  Clock,
-  Phone,
-  Utensils,
-  BookOpen,
   Check,
-  Heart,
-  Users,
   Instagram,
-  Camera,
+  Phone,
 } from 'lucide-react';
-import { useRestaurantStatus } from './utils/operatingHours';
 
 export default function App() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isBagOpen, setIsBagOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<AppPage>('home');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [configuringItem, setConfiguringItem] = useState<MenuItem | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const status = useRestaurantStatus();
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -45,7 +33,7 @@ export default function App() {
 
   const handleAddToCartWithToast = (item: CartItem) => {
     handleAddToCart(item);
-    showToast(`Added ${item.item.name} to takeaway bag!`);
+    showToast(`Added ${item.item.name} to order bag!`);
   };
 
   const handleUpdateQuantity = (cartId: string, newQty: number) => {
@@ -85,15 +73,7 @@ export default function App() {
   };
 
   const handleNavigate = (page: AppPage) => {
-    setConfiguringItem(null);
     setCurrentPage(page);
-    scrollToSection();
-  };
-
-  const handleOpenConfigurator = (item: MenuItem) => {
-    setSelectedCategory(item.category);
-    setConfiguringItem(item);
-    setCurrentPage('full-menu');
     scrollToSection();
   };
 
@@ -138,9 +118,7 @@ export default function App() {
               <div id="main-content-area" className="mt-4 sm:mt-6">
                 {currentPage === 'home' && (
                   <HomePage
-                    onNavigate={handleNavigate}
                     onAddToCart={handleAddToCartWithToast}
-                    onOpenConfigurator={handleOpenConfigurator}
                     onOpenCart={() => setIsBagOpen(true)}
                     cartCount={totalItemsCount}
                   />
@@ -148,8 +126,6 @@ export default function App() {
 
                 {currentPage === 'story' && (
                   <HomelyAtmosphere
-                    onGoToSummary={() => handleNavigate('home')}
-                    onGoToFullMenu={() => handleNavigate('full-menu')}
                     onOpenOrder={() => setIsBagOpen(true)}
                   />
                 )}
@@ -159,26 +135,17 @@ export default function App() {
                     onAddToCart={handleAddToCart}
                     cartCount={totalItemsCount}
                     onOpenCart={() => setIsBagOpen(true)}
-                    initialCategory={selectedCategory}
-                    onBackToSummary={() => handleNavigate('home')}
-                    initialConfiguringItem={configuringItem}
                   />
                 )}
 
                 {currentPage === 'team' && (
                   <ServiceWithLovePage
-                    onGoToSummary={() => handleNavigate('home')}
-                    onGoToFullMenu={() => handleNavigate('full-menu')}
-                    onGoToStory={() => handleNavigate('story')}
                     onOpenOrder={() => setIsBagOpen(true)}
                   />
                 )}
 
                 {currentPage === 'tour' && (
                   <RestaurantTourSection
-                    onGoToMenu={() => handleNavigate('full-menu')}
-                    onGoToStory={() => handleNavigate('story')}
-                    onGoToService={() => handleNavigate('team')}
                     onOpenOrder={() => setIsBagOpen(true)}
                   />
                 )}
@@ -187,7 +154,7 @@ export default function App() {
               {/* Fourways Mall BTC05 Taxi Terminal Guide */}
               <LocationGuide />
 
-              {/* 7. Footer with warm signoff */}
+              {/* Footer with warm signoff, Desk Number & Instagram */}
               <footer className="mt-8 pt-8 pb-12 border-t-2 border-[#decbb7] text-center px-4">
                 <div className="w-full max-w-md mx-auto h-2 bg-scottish-tartan rounded-full mb-5 opacity-90" />
                 <div className="flex items-center justify-center gap-2 text-sm sm:text-base font-display text-[#361a15] tracking-wide uppercase">
@@ -198,7 +165,14 @@ export default function App() {
                 <p className="text-xs text-[#75594b] mt-1 font-body">
                   Authentic South African Home-Cooked Food • Slow pots, hearty kotas, crispy Aromat chips, fresh salads, and warm hospitality.
                 </p>
-                <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-[#8b1d20] mt-3">
+                <div className="flex flex-wrap items-center justify-center gap-2.5 text-xs font-bold text-[#8b1d20] mt-3">
+                  <a
+                    href="tel:0723147152"
+                    className="cursor-pointer inline-flex items-center gap-1.5 bg-[#2d1b16] text-[#fad194] border border-[#e5a84b]/50 px-3.5 py-1.5 rounded-full shadow-xs hover:bg-[#422820] active:scale-95 transition-all"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-[#e5a84b]" />
+                    <span>Order Desk: 072 314 7152</span>
+                  </a>
                   <a
                     href="https://www.instagram.com/granny_kitchen_fourways"
                     target="_blank"
@@ -206,42 +180,8 @@ export default function App() {
                     className="cursor-pointer inline-flex items-center gap-1.5 bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045] text-white px-3.5 py-1.5 rounded-full shadow-xs hover:brightness-110 active:scale-95 transition-all"
                   >
                     <Instagram className="w-3.5 h-3.5 text-white" />
-                    <span>Follow Us @granny_kitchen_fourways</span>
+                    <span>granny's_kitchen_fourways</span>
                   </a>
-                  <button
-                    onClick={() => handleNavigate('home')}
-                    className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1.5 rounded-full border border-[#d8c3ad]"
-                  >
-                    <span>Home</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavigate('story')}
-                    className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1.5 rounded-full border border-[#d8c3ad]"
-                  >
-                    <Heart className="w-3 h-3 text-[#e5a84b] fill-[#e5a84b]" />
-                    <span>Our Story</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavigate('full-menu')}
-                    className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1.5 rounded-full border border-[#d8c3ad]"
-                  >
-                    <Utensils className="w-3 h-3 text-[#e5a84b]" />
-                    <span>Full Menu</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavigate('team')}
-                    className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1.5 rounded-full border border-[#d8c3ad]"
-                  >
-                    <Users className="w-3 h-3 text-[#e5a84b]" />
-                    <span>Granny's Team</span>
-                  </button>
-                  <button
-                    onClick={() => handleNavigate('tour')}
-                    className="hover:underline cursor-pointer inline-flex items-center gap-1.5 bg-[#fbf5ea] px-3 py-1.5 rounded-full border border-[#d8c3ad]"
-                  >
-                    <Camera className="w-3 h-3 text-[#e5a84b]" />
-                    <span>Inside Tour</span>
-                  </button>
                 </div>
                 <div className="flex items-center justify-center gap-4 text-xs font-semibold text-[#663b28] mt-3">
                   <span>Mon–Sat: 06:00 – 19:00</span>
